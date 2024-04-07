@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:motor_app/ui/home_screen.dart';
+import 'package:motor_app/ui/setting/setting_screen.dart';
 
 import '../ui/category/categories_overview_screen.dart';
 import 'package:motor_app/ui/news/news_overview_screen.dart';
-import 'package:motor_app/auth/register_screen.dart';
 
 class HomePageScreen extends StatefulWidget {
   static const routeName = "/home";
@@ -15,19 +16,11 @@ class HomePageScreen extends StatefulWidget {
 class _HomePageScreenState extends State<HomePageScreen> {
   int _selectedIndex = 0;
 
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Trang chủ',
-      style: optionStyle,
-    ),
+    HomeScreen(),
     CategoryOverViewScreen(),
     NewsOverviewScreen(),
-    Text(
-      'Cài đặt',
-      style: optionStyle,
-    ),
+    SettingScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -39,24 +32,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('MyShop'),
-          automaticallyImplyLeading: false,
-          actions: <Widget>[
-            Image.asset('assets/black_logo.png'),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.shopping_cart),
-            ),
-            const Text('/'),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(RegisterScreen.routeName);
-              },
-              child: const Text('Đăng ký'),
-            ),
-          ],
-        ),
         body: Center(
           child: _widgetOptions.elementAt(_selectedIndex),
         ),

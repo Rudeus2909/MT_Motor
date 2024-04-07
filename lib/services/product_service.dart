@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:motor_app/models/product_colors_model.dart';
+import 'package:motor_app/models/product_detail_model.dart';
 import 'package:motor_app/models/product_model.dart';
 
 class ProductService {
@@ -8,8 +10,8 @@ class ProductService {
     List<ProductModel> productList = [];
 
     try {
-      final respone = await http
-          .get(Uri.parse('http://192.168.56.1:8080/php_api/product.php?'));
+      final respone = await http.get(
+          Uri.parse('http://192.168.56.1:8080/php_api/products/product.php?'));
 
       if (respone.statusCode == 200) {
         final jsonData = jsonDecode(respone.body);
@@ -25,16 +27,57 @@ class ProductService {
     return productList;
   }
 
-  Future fetchProductDetail(int productId) async {
+  Future<List<ProductDetailModel>> fetchProductDetail(int productId) async {
+    List<ProductDetailModel> productDetail = [];
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.56.1:8080/php_api/product.php?id_product=$productId'));
+          'http://192.168.56.1:8080/php_api/products/product.php?id_product=$productId'));
       if (response.statusCode == 200) {
         final jsonData = jsonDecode(response.body);
-        return jsonData;
+        productDetail = List<ProductDetailModel>.from(
+            jsonData.map((item) => ProductDetailModel.fromJson(item)));
       }
     } catch (error) {
       print(error);
+    }
+    return productDetail;
+  }
+
+  Future fetchProductColors(int productId) async {
+    List<ProductColorsModel> productColors = [];
+    try {
+      final response = await http.get(Uri.parse(
+          'http://192.168.56.1:8080/php_api/products/product_colors.php?id_product=$productId'));
+      if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body);
+        productColors = List<ProductColorsModel>.from(
+            jsonData.map((item) => ProductColorsModel.fromJson(item)));
+      }
+    } catch (error) {
+      print(error);
+    }
+    return productColors;
+  }
+
+  //Favorite
+  Future<bool> favorite(int idProduct, int idUser, int favorite) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://192.168.56.1:8080/php_api/products/product.php?'),
+        body: {
+          'id_product': idProduct.toString(),
+          'id_user': idUser.toString(),
+          'favorite': favorite.toString(),
+        },
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      print(error);
+      return false;
     }
   }
 }

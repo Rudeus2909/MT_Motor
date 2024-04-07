@@ -9,42 +9,56 @@ class CategoryListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      child: GridTile(
-        footer: CategoryGridFooter(
-          category: category,
-        ),
-        child: GestureDetector(
-          onTap: () {
-           Navigator.push(context, MaterialPageRoute(builder: ((context) => ProductOverViewScreen(categoryId: category.idCategory!))));
-          },
-          child: Image.asset(
-            category.categoryImage,
-            fit: BoxFit.cover,
+    return Column(
+      children: [
+        Container(
+          height: 160,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.grey.shade300,
+            borderRadius: BorderRadius.circular(30),
+            border: Border.all(color: Colors.black38),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(1),
+                spreadRadius: 2,
+                blurRadius: 3,
+                offset: const Offset(1, 0),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: SizedBox(
+              height: 120,
+              child: GridTile(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => ProductOverViewScreen(
+                            categoryId: category.idCategory!)),
+                      ),
+                    );
+                  },
+                  child: Image.asset(
+                    category.categoryImage,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class CategoryGridFooter extends StatelessWidget {
-  const CategoryGridFooter({
-    super.key,
-    required this.category,
-  });
-
-  final CategoryModel category;
-
-  @override
-  Widget build(BuildContext context) {
-    return GridTileBar(
-      backgroundColor: Colors.black87,
-      title: Text(
-        category.categoryName,
-        textAlign: TextAlign.center,
-      ),
+        const SizedBox(
+          height: 10,
+        ),
+        Text(
+          category.categoryName,
+          style: Theme.of(context).textTheme.headlineSmall,
+        )
+      ],
     );
   }
 }

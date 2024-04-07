@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:motor_app/auth/register_manager.dart';
+import 'package:motor_app/services/register_service.dart';
 import 'package:motor_app/ui/screen.dart';
 import 'package:provider/provider.dart';
 import '../utils/global_colors.dart';
@@ -98,7 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 InkWell(
                   onTap: () async {
                     bool loginState = await context
-                        .read<RegisterManager>()
+                        .read<RegisterService>()
                         .register(
                             emailController.text, passwordController.text);
                     if (loginState == true) {

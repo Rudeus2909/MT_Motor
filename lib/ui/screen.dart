@@ -8,4 +8,4 @@ export 'splash.dart';
 //Product
 export '../ui/category/categories_overview_screen.dart';
 export '../ui/products/product_overview_screen.dart';
-export 'products/product_detail/product_detail_screen.dart';
+export 'products/product_detail_screen.dart';

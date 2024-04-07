@@ -1,8 +1,13 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:motor_app/models/user_model.dart';
 
-class LoginService {
+class LoginService  with ChangeNotifier{
+  String role = "";
+  int idUser = 0;
+  List<UserModel> userList = [];
   Future<bool> login(String email, String password) async {
     try {
       final response = await http.post(
@@ -12,8 +17,12 @@ class LoginService {
           'password': password,
         },
       );
-      var data = jsonDecode(response.body);
-      if (data == "Success") {
+      if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body);
+        userList = List<UserModel>.from(
+            jsonData.map((items) => UserModel.fromJson(items)));
+        role = userList[0].role;
+        idUser = userList[0].idUser;
         return true;
       } else {
         return false;
@@ -23,4 +32,5 @@ class LoginService {
       return false;
     }
   }
+  
 }

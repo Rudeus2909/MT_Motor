@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:motor_app/auth/login_manager.dart';
+import 'package:motor_app/services/login_service.dart';
+import 'package:motor_app/ui/cart/cart_screen.dart';
 import 'package:motor_app/ui/screen.dart';
 import 'package:motor_app/ui/widgets/social_login.dart';
 import 'package:motor_app/ui/widgets/text_form.dart';
@@ -81,22 +82,48 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 25,
                 ),
+
+                //Button
                 InkWell(
                   onTap: () async {
                     bool loginState = await context
-                        .read<LoginManager>()
+                        .read<LoginService>()
                         .login(emailController.text, passwordController.text);
+                    String userRole = context.read<LoginService>().role;
                     if (loginState == true) {
-                      Fluttertoast.showToast(
-                        msg: "Đăng nhập thành công",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.CENTER,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.grey,
-                        textColor: Colors.white,
-                        fontSize: 16.0,
-                      );
-                      Navigator.of(context).pushNamed(HomePageScreen.routeName);
+                      if (userRole == "admin") {
+                        Fluttertoast.showToast(
+                          msg: "Đăng nhập thành công",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.grey,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CartScreen(),
+                          ),
+                        );
+                      } else {
+                        Fluttertoast.showToast(
+                          msg: "Đăng nhập thành công",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.grey,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomePageScreen(),
+                          ),
+                        );
+                      }
                     } else {
                       // ignore: use_build_context_synchronously
                       showDialog(

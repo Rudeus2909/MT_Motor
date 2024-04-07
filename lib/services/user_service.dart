@@ -22,4 +22,20 @@ class UserService {
     }
     return userList;
   }
+
+  Future<List<UserModel>> fetchUserById(int idUser) async {
+    List<UserModel> user = [];
+    try {
+      final response = await http.get(Uri.parse(
+          'http://192.168.56.1:8080/php_api/user.php?id_user=$idUser'));
+      if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body);
+        user = List<UserModel>.from(
+            jsonData.map((items) => UserModel.fromJson(items)));
+      }
+    } catch (error) {
+      print(error);
+    }
+    return user;
+  }
 }

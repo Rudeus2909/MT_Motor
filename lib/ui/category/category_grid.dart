@@ -13,14 +13,13 @@ class CategoryGrid extends StatelessWidget {
     final categories = context.select<CategoryManager, List<CategoryModel>>((categoriesManager) => categoriesManager.items);
 
     return GridView.builder(
-      padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+      padding: const EdgeInsets.only(left: 5, top: 10, right: 5),
       itemCount: categories.length,
       itemBuilder: (ctx, i) => CategoryListTile(categories[i]),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 3 / 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
+        crossAxisSpacing: 7,
+        mainAxisSpacing: 30,
       ),
     );
   }

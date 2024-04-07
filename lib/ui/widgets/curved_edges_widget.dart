@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:motor_app/ui/products/product_detail/curved_edges.dart';
+import 'package:motor_app/ui/widgets/curved_edges.dart';
 
 class CurvedEdgesWidget extends StatelessWidget {
   const CurvedEdgesWidget({

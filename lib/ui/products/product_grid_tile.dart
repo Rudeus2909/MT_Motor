@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:motor_app/models/product_model.dart';
-import 'package:motor_app/ui/products/product_detail/product_detail_screen.dart';
+import 'package:motor_app/ui/products/product_detail_screen.dart';
 
 class ProductListTile extends StatelessWidget {
   const ProductListTile(this.product, {super.key});

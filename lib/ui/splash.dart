@@ -11,13 +11,11 @@ class SplashView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Timer(const Duration(seconds: 3), () {
-      Get.to(const HomePageScreen());
+      Get.to(HomePageScreen());
     });
     return Scaffold(
       backgroundColor: GlobalColors.mainColor,
-      body: Center(
-        child: Image.asset('assets/white_logo.png')
-      ),
+      body: Center(child: Image.asset('assets/white_logo.png')),
     );
   }
 }

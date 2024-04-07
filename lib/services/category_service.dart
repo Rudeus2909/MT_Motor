@@ -9,7 +9,7 @@ class CategoryService {
     List<CategoryModel> categoryList = [];
 
     try {
-      final respone = await http.get(Uri.parse('http://192.168.56.1:8080/php_api/category.php?'));
+      final respone = await http.get(Uri.parse('http://192.168.56.1:8080/php_api/products/category.php?'));
 
       if (respone.statusCode == 200) {
         final jsonData = jsonDecode(respone.body);
