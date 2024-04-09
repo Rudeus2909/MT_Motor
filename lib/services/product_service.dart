@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:motor_app/models/favorite.dart';
 import 'package:motor_app/models/product_colors_model.dart';
 import 'package:motor_app/models/product_detail_model.dart';
 import 'package:motor_app/models/product_model.dart';
@@ -59,14 +60,15 @@ class ProductService {
     return productColors;
   }
 
-  //Favorite
-  Future<bool> favorite(int idProduct, int idUser, int favorite) async {
+  //addToFavorite
+  Future<bool> favorite(int idProduct, int idUser, int idColor, bool favorite) async {
     try {
       final response = await http.post(
         Uri.parse('http://192.168.56.1:8080/php_api/products/product.php?'),
         body: {
           'id_product': idProduct.toString(),
           'id_user': idUser.toString(),
+          'id_color': idColor.toString(),
           'favorite': favorite.toString(),
         },
       );
@@ -79,5 +81,20 @@ class ProductService {
       print(error);
       return false;
     }
+  }
+
+  //fetchFavorite
+  Future<List<FavoriteProductModel>> fetchFavorite(int idUser) async {
+    List<FavoriteProductModel> favorite = [];
+    try {
+      final response = await http.get(Uri.parse('http://192.168.56.1:8080/php_api/products/product.php?id_user=$idUser'));
+      if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body);
+        favorite = List<FavoriteProductModel>.from(jsonData.map((item) => FavoriteProductModel.fromJson(item)));
+      }
+    } catch (error) {
+      print(error);
+    }
+    return favorite;
   }
 }

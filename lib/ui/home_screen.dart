@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:motor_app/services/login_service.dart';
 import 'package:motor_app/ui/news/news_overview_screen.dart';
+import 'package:motor_app/ui/products/favorite_screen.dart';
 import 'package:motor_app/ui/products/product_detail_screen.dart';
 import 'package:motor_app/ui/products/products_manager.dart';
 import 'package:motor_app/ui/widgets/custom_appbar.dart';
@@ -36,11 +37,11 @@ class _HomeScreenState extends State<HomeScreen> {
             HeaderContainer(
               child: Column(
                 children: [
-                  CustomAppbar(
-                    title: Consumer<UserManager>(
-                      builder: (context, userManager, child) {
-                        if (userManager.user.isNotEmpty) {
-                          return Column(
+                  Consumer<UserManager>(
+                    builder: (context, userManager, child) {
+                      if (userManager.user.isNotEmpty) {
+                        return CustomAppbar(
+                          title: Column(
                             children: [
                               Row(
                                 children: [
@@ -62,36 +63,45 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               ),
                             ],
-                          );
-                        } else {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                      },
-                    ),
-                    actions: [
-                      //Favorite
-                      Stack(
-                        children: [
-                          Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.favorite,
-                                color: Colors.red,
-                              ),
-                            ),
                           ),
-                        ],
-                      )
-                    ],
+                          actions: [
+                            //Favorite
+                            Stack(
+                              children: [
+                                Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => FavoriteScreen(
+                                            idUser: userManager.user[0].idUser,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    icon: const Icon(
+                                      Icons.favorite,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        );
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
                   ),
                   const SizedBox(
                     height: 15,
@@ -193,12 +203,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                             height: 10,
                                           ),
                                           Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
                                             children: [
                                               Text(
                                                 productManager
-                                                    .someProduct[
-                                                        selectedIndex]
+                                                    .someProduct[selectedIndex]
                                                     .productName,
                                                 style: Theme.of(context)
                                                     .textTheme
@@ -206,9 +216,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               IconButton(
                                                 onPressed: () {
-                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailScreen(productId: productManager.someProduct[selectedIndex].idProduct!),));
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ProductDetailScreen(
+                                                                productId: productManager
+                                                                    .someProduct[
+                                                                        selectedIndex]
+                                                                    .idProduct!),
+                                                      ));
                                                 },
-                                                icon: const Icon(Icons.arrow_forward, size: 30,),
+                                                icon: const Icon(
+                                                  Icons.arrow_forward,
+                                                  size: 30,
+                                                ),
                                               ),
                                             ],
                                           )

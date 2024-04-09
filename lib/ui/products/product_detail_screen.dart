@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:motor_app/services/login_service.dart';
 import 'package:motor_app/ui/payment/pay_ment_screen.dart';
 import 'package:motor_app/ui/products/products_manager.dart';
@@ -16,7 +17,6 @@ class ProductDetailScreen extends StatefulWidget {
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   int selectedIndex = 0;
   PageController pageController = PageController(initialPage: 0);
-  int favorite = 0;
 
   @override
   void initState() {
@@ -468,9 +468,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   children: <Widget>[
                     ElevatedButton(
                       onPressed: () {
-                        favorite = 1;
+                        var favorite = true;
                         var idUser = context.read<LoginService>().idUser;
-                        context.read<ProductManager>().favorite(widget.productId, idUser, favorite);
+                        var idColor = productColorManager.productColor[selectedIndex].idColor;
+                        context.read<ProductManager>().favorite(widget.productId, idUser, idColor!, favorite);
+                        Fluttertoast.showToast(
+                          msg: "Thêm vào yêu thích thành công",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.grey,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(10),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:motor_app/models/favorite.dart';
 import 'package:motor_app/models/product_colors_model.dart';
 import 'package:motor_app/models/product_detail_model.dart';
 
@@ -109,8 +110,19 @@ class ProductManager with ChangeNotifier {
   }
 
   //Favorite
-  Future favorite(int idProduct, int idUser, int favorite) async {
-    _productService.favorite(idProduct, idUser, favorite);
+  Future favorite(int idProduct, int idUser, int idColor, bool favorite) async {
+    _productService.favorite(idProduct, idUser, idColor, favorite);
+    notifyListeners();
+  }
+
+  //Hiển thị các sản phẩm yêu thích
+  late List<FavoriteProductModel> favoriteProducts = [];
+  Future<void> fetchFavorite(int idUser) async {
+    try {
+      favoriteProducts = await _productService.fetchFavorite(idUser);
+    } catch (error) {
+      print(error);
+    }
     notifyListeners();
   }
 }
