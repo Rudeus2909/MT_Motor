@@ -62,6 +62,7 @@ class ProductManager with ChangeNotifier {
     notifyListeners();
   }
 
+  //Lấy danh sách các màu và các thông tin khác để hiển thị trong trang chi tiết
   late List<ProductColorsModel> _productColors = [];
   List<ProductColorsModel> get productColor => _productColors;
   Future<void> fetchProductColors(int productId) async {
@@ -87,6 +88,17 @@ class ProductManager with ChangeNotifier {
     } catch (error) {
       return null;
     }
+  }
+
+  //Lấy thông tin màu, giá, ảnh của sản phẩm khi đặt mua
+  late List<ProductColorInfoModel> productColorInfo = [];
+  Future<void> fetchProductColorInfo(int idProduct, int idColor) async {
+    try {
+      productColorInfo = await _productService.fetchProductColorInfo(idProduct, idColor);
+    } catch (error) {
+      print(error);
+    }
+    notifyListeners();
   }
 
   //Lấy một số sản phẩm cố định

@@ -31,6 +31,7 @@ class SettingMenuTile extends StatelessWidget {
         style: Theme.of(context).textTheme.labelMedium,
       ),
       trailing: trailing,
+      onTap: onTap,
     );
   }
 }

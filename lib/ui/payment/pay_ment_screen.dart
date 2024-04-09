@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:motor_app/services/login_service.dart';
+import 'package:motor_app/ui/payment/order_manager.dart';
 import 'package:motor_app/ui/products/products_manager.dart';
 import 'package:motor_app/ui/widgets/text_form.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +18,13 @@ class PayMentScreen extends StatefulWidget {
 }
 
 class _PayMentScreenState extends State<PayMentScreen> {
-  final TextEditingController nameController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<ProductManager>().fetchProductColorInfo(widget.idProduct, widget.idColor);
+  }
+  final TextEditingController ordererController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
@@ -47,7 +56,7 @@ class _PayMentScreenState extends State<PayMentScreen> {
               height: 15,
             ),
             TextForm(
-              controller: nameController,
+              controller: ordererController,
               text: 'Họ và tên',
               textInputType: TextInputType.text,
               obscure: false,
@@ -90,9 +99,9 @@ class _PayMentScreenState extends State<PayMentScreen> {
               height: 15,
             ),
             Consumer2<ProductManager, ProductManager>(
-              builder: (context, productManager, productColorManager, child) {
+              builder: (context, productManager, productColorInfo, child) {
                 if (productManager.findById(widget.idProduct) != null &&
-                    productColorManager.productColor.isNotEmpty) {
+                    productColorInfo.productColorInfo.isNotEmpty) {
                   var productName =
                       productManager.findById(widget.idProduct)!.productName;
                   return Container(
@@ -125,8 +134,7 @@ class _PayMentScreenState extends State<PayMentScreen> {
                               ],
                             ),
                             child: Image.asset(
-                              productColorManager
-                                  .productColor[widget.idColor - 1].imageUrl,
+                              productColorInfo.productColorInfo[0].imageUrl,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -156,9 +164,7 @@ class _PayMentScreenState extends State<PayMentScreen> {
                                 textAlign: TextAlign.center,
                               ),
                               Text(
-                                productColorManager
-                                    .productColor[widget.idColor - 1].price
-                                    .toString(),
+                                productColorInfo.productColorInfo[0].price.toString(),
                                 style: Theme.of(context).textTheme.titleSmall,
                                 textAlign: TextAlign.center,
                               )
@@ -170,8 +176,7 @@ class _PayMentScreenState extends State<PayMentScreen> {
                                 textAlign: TextAlign.center,
                               ),
                               Text(
-                                productColorManager
-                                    .productColor[widget.idColor - 1].colorName,
+                                productColorInfo.productColorInfo[0].colorName,
                                 style: Theme.of(context).textTheme.titleSmall,
                                 textAlign: TextAlign.center,
                               )
@@ -220,14 +225,52 @@ class _PayMentScreenState extends State<PayMentScreen> {
                 style: TextStyle(color: Colors.black, fontSize: 17),
               ),
             ),
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(130, 20),
-                  padding: const EdgeInsets.all(10),
-                  backgroundColor: Colors.red,
-                  side: const BorderSide(color: Colors.black)),
-              child: const Text('Đặt mua'),
+            Consumer<ProductManager>(
+              builder: (context, productColorInfo, child) {
+                if (productColorInfo.productColorInfo.isNotEmpty) {
+                  return ElevatedButton(
+                    onPressed: () async {
+                      int quantityAfterOrdering = productColorInfo.productColorInfo[0].amount - 1;
+                      var idUser = context.read<LoginService>().idUser;
+                      var total = productColorInfo.productColorInfo[0].price;
+                      var orderTime = DateTime.now().toString();
+                      var imageUrl = productColorInfo.productColorInfo[0].imageUrl;
+                      await context.read<OrderManager>().addOrder(
+                            idUser,
+                            orderTime,
+                            widget.idProduct,
+                            total,
+                            ordererController.text,
+                            addressController.text,
+                            emailController.text,
+                            phoneController.text,
+                            widget.idColor,
+                            quantityAfterOrdering,
+                            imageUrl,
+                          );
+                      Fluttertoast.showToast(
+                        msg: "Đặt mua thành công",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.grey,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(130, 20),
+                        padding: const EdgeInsets.all(10),
+                        backgroundColor: Colors.red,
+                        side: const BorderSide(color: Colors.black)),
+                    child: const Text('Đặt mua'),
+                  );
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
             ),
           ],
         ),

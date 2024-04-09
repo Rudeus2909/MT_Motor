@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:motor_app/services/login_service.dart';
+import 'package:motor_app/ui/payment/orders_screen.dart';
+import 'package:motor_app/ui/products/favorite_screen.dart';
 import 'package:motor_app/ui/setting/setting_menu_tile.dart';
 import 'package:motor_app/ui/widgets/custom_appbar.dart';
 import 'package:motor_app/user_manager.dart';
@@ -93,7 +95,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Account Setting',
+                        'Cài đặt tài khoản',
                         style: Theme.of(context)
                             .textTheme
                             .headlineSmall!
@@ -111,15 +113,30 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                   SettingMenuTile(
                     icon: Icons.shopping_cart,
-                    title: 'Giỏ hàng của tôi',
+                    title: 'Yêu thích',
                     subtitle: 'Thêm, xóa sản phẩm và đến trang thanh toán',
-                    onTap: () {},
+                    onTap: () {
+                      var idUser = context.read<LoginService>().idUser;
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                FavoriteScreen(idUser: idUser),
+                          ));
+                    },
                   ),
                   SettingMenuTile(
                     icon: Icons.add_business_rounded,
                     title: 'Đơn hàng của tôi',
                     subtitle: 'Các đơn đang chờ xử lý và đã hoàn thành',
-                    onTap: () {},
+                    onTap: () {
+                      var idUser = context.read<LoginService>().idUser;
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OrdersScreen(idUser: idUser),
+                          ));
+                    },
                   ),
                   SettingMenuTile(
                     icon: Icons.account_balance,

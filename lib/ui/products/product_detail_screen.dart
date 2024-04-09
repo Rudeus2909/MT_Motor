@@ -165,7 +165,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  
                                   //Price
                                   Text(
                                     productColorManager
@@ -470,8 +469,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       onPressed: () {
                         var favorite = true;
                         var idUser = context.read<LoginService>().idUser;
-                        var idColor = productColorManager.productColor[selectedIndex].idColor;
-                        context.read<ProductManager>().favorite(widget.productId, idUser, idColor!, favorite);
+                        var idColor = productColorManager
+                            .productColor[selectedIndex].idColor;
+                        context.read<ProductManager>().favorite(
+                            widget.productId, idUser, idColor!, favorite);
                         Fluttertoast.showToast(
                           msg: "Thêm vào yêu thích thành công",
                           toastLength: Toast.LENGTH_SHORT,
@@ -490,16 +491,31 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PayMentScreen(
-                                idColor: productColorManager
-                                    .productColor[selectedIndex].idColor!,
-                                idProduct: productColorManager
-                                    .productColor[selectedIndex].idProduct),
-                          ),
-                        );
+                        if (productColorManager
+                                .productColor[selectedIndex].amount ==
+                            0) {
+                          Fluttertoast.showToast(
+                            msg:
+                                "Số lượng sản phẩm trên cửa hàng không đủ để tiến hành đặt mua",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.grey,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PayMentScreen(
+                                  idColor: productColorManager
+                                      .productColor[selectedIndex].idColor!,
+                                  idProduct: productColorManager
+                                      .productColor[selectedIndex].idProduct),
+                            ),
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(10),

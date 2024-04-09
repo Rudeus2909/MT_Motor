@@ -44,6 +44,7 @@ class ProductService {
     return productDetail;
   }
 
+  //Lấy danh sách màu sản phẩm và các thông tin liên quan
   Future fetchProductColors(int productId) async {
     List<ProductColorsModel> productColors = [];
     try {
@@ -60,8 +61,26 @@ class ProductService {
     return productColors;
   }
 
+  //Lấy danh sách màu và các thông tin liên quan để đặt hàng
+  Future fetchProductColorInfo(int idProduct, int idColor) async {
+    List<ProductColorInfoModel> productColorInfo = [];
+    try {
+      final response = await http.get(Uri.parse(
+          'http://192.168.56.1:8080/php_api/products/product_colors.php?id_product=$idProduct&&id_color=$idColor'));
+      if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body);
+        productColorInfo = List<ProductColorInfoModel>.from(
+            jsonData.map((item) => ProductColorInfoModel.fromJson(item)));
+      }
+    } catch (error) {
+      print(error);
+    }
+    return productColorInfo;
+  }
+
   //addToFavorite
-  Future<bool> favorite(int idProduct, int idUser, int idColor, bool favorite) async {
+  Future<bool> favorite(
+      int idProduct, int idUser, int idColor, bool favorite) async {
     try {
       final response = await http.post(
         Uri.parse('http://192.168.56.1:8080/php_api/products/product.php?'),
@@ -87,10 +106,12 @@ class ProductService {
   Future<List<FavoriteProductModel>> fetchFavorite(int idUser) async {
     List<FavoriteProductModel> favorite = [];
     try {
-      final response = await http.get(Uri.parse('http://192.168.56.1:8080/php_api/products/product.php?id_user=$idUser'));
+      final response = await http.get(Uri.parse(
+          'http://192.168.56.1:8080/php_api/products/product.php?id_user=$idUser'));
       if (response.statusCode == 200) {
         final jsonData = jsonDecode(response.body);
-        favorite = List<FavoriteProductModel>.from(jsonData.map((item) => FavoriteProductModel.fromJson(item)));
+        favorite = List<FavoriteProductModel>.from(
+            jsonData.map((item) => FavoriteProductModel.fromJson(item)));
       }
     } catch (error) {
       print(error);
