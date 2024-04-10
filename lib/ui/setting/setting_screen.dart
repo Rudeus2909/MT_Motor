@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:motor_app/services/login_service.dart';
-import 'package:motor_app/ui/payment/orders_screen.dart';
+import 'package:motor_app/ui/orders/orders_screen.dart';
 import 'package:motor_app/ui/products/favorite_screen.dart';
 import 'package:motor_app/ui/setting/setting_menu_tile.dart';
 import 'package:motor_app/ui/widgets/custom_appbar.dart';
@@ -112,9 +112,9 @@ class _SettingScreenState extends State<SettingScreen> {
                     onTap: () {},
                   ),
                   SettingMenuTile(
-                    icon: Icons.shopping_cart,
+                    icon: Icons.favorite,
                     title: 'Yêu thích',
-                    subtitle: 'Thêm, xóa sản phẩm và đến trang thanh toán',
+                    subtitle: 'Trang các sản phẩm bạn đã thích',
                     onTap: () {
                       var idUser = context.read<LoginService>().idUser;
                       Navigator.push(

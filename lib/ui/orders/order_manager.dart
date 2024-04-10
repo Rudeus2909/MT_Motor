@@ -46,6 +46,15 @@ class OrderManager with ChangeNotifier {
     notifyListeners();
   }
 
+  //findOrderById
+  OrderModel? findById(int idOrder) {
+    try {
+      return orders.firstWhere((item) => item.idOrder == idOrder);
+    } catch (error) {
+      return null;
+    }
+  }
+
   //fetchOrderDetail
   late List<OrderDetailModel> orderDetail = [];
   Future<void> fetchOrderDetail(int idOrder) async {
@@ -54,6 +63,12 @@ class OrderManager with ChangeNotifier {
     } catch (error) {
       print(error);
     }
+    notifyListeners();
+  }
+
+  //updateOrderStatus
+  Future updateOrderStatus(int idOrder, String orderStatus) async {
+    await _orderService.updateOrderStatus(idOrder, orderStatus);
     notifyListeners();
   }
 }

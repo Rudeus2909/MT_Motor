@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:motor_app/ui/payment/order_detail_screen.dart';
-import 'package:motor_app/ui/payment/order_manager.dart';
+import 'package:motor_app/ui/orders/order_detail_screen.dart';
+import 'package:motor_app/ui/orders/order_manager.dart';
 import 'package:motor_app/ui/widgets/custom_appbar.dart';
 import 'package:motor_app/ui/widgets/header_container.dart';
 import 'package:provider/provider.dart';
@@ -53,7 +53,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         child: ListView.builder(
                           itemCount: orderManager.orders.length,
                           itemBuilder: (context, index) {
-                            var order = index + 1;
+                            var order = orderManager.orders[index].idOrder;
                             return Column(
                               children: [
                                 Container(
@@ -73,7 +73,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 16, vertical: 8),
                                     child: SizedBox(
-                                      height: 90,
+                                      height: 150,
                                       child: Row(
                                         children: [
                                           Column(
@@ -84,7 +84,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                 'Đơn hàng ' + order.toString(),
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .titleLarge,
+                                                    .headlineSmall,
                                               ),
                                               const SizedBox(
                                                 height: 15,
@@ -100,6 +100,35 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                               ),
                                               Text(orderManager
                                                   .orders[index].orderTime),
+                                              const SizedBox(
+                                                height: 15,
+                                              ),
+                                              Text(
+                                                'Trạng thái đơn hàng: ',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleLarge,
+                                              ),
+                                              const SizedBox(
+                                                height: 8,
+                                              ),
+                                              Text(
+                                                orderManager
+                                                    .orders[index].orderStatus,
+                                                style: orderManager
+                                                            .orders[index]
+                                                            .orderStatus ==
+                                                        "Đã xác nhận"
+                                                    ? const TextStyle(
+                                                        color: Colors.green)
+                                                    : orderManager.orders[index]
+                                                                .orderStatus ==
+                                                            "Chờ xác nhận"
+                                                        ? const TextStyle(
+                                                            color: Colors.black)
+                                                        : const TextStyle(
+                                                            color: Colors.red),
+                                              ),
                                             ],
                                           ),
                                           const SizedBox(
@@ -107,8 +136,17 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                           ),
                                           IconButton(
                                             onPressed: () {
-                                              var idOrder = context.read<OrderManager>().orders[index].idOrder;
-                                              Navigator.push(context, MaterialPageRoute(builder: (context) => OrderDetailScreen(idOrder: idOrder),));
+                                              var idOrder = context
+                                                  .read<OrderManager>()
+                                                  .orders[index]
+                                                  .idOrder;
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        OrderDetailScreen(
+                                                            idOrder: idOrder),
+                                                  ));
                                             },
                                             icon: const Icon(
                                               Icons.arrow_forward_sharp,

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:motor_app/services/login_service.dart';
 import 'package:motor_app/services/register_service.dart';
 import 'package:motor_app/ui/cart/cart_screen.dart';
-import 'package:motor_app/ui/payment/order_manager.dart';
+import 'package:motor_app/ui/orders/order_manager.dart';
 import 'package:motor_app/ui/products/products_manager.dart';
 import 'ui/category/category_manager.dart';
 import 'package:motor_app/user_manager.dart';

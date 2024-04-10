@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:motor_app/models/order_model.dart';
 
 class OrderService {
-
   //addOrder
   Future<bool> addOrder(
     int idUser,
@@ -51,10 +50,12 @@ class OrderService {
   Future<List<OrderModel>> fetchOrder(int idUser) async {
     List<OrderModel> orders = [];
     try {
-      final response = await http.get(Uri.parse('http://192.168.56.1:8080/php_api/order.php?id_user=$idUser'));
+      final response = await http.get(Uri.parse(
+          'http://192.168.56.1:8080/php_api/order.php?id_user=$idUser'));
       if (response.statusCode == 200) {
         final jsonData = jsonDecode(response.body);
-        orders = List<OrderModel>.from(jsonData.map((item) => OrderModel.fromJson(item)));
+        orders = List<OrderModel>.from(
+            jsonData.map((item) => OrderModel.fromJson(item)));
       }
     } catch (error) {
       print(error);
@@ -66,14 +67,37 @@ class OrderService {
   Future<List<OrderDetailModel>> fetchOrderDetail(int idOrder) async {
     List<OrderDetailModel> orderDetail = [];
     try {
-      final response = await http.get(Uri.parse('http://192.168.56.1:8080/php_api/order.php?id_order=$idOrder'));
+      final response = await http.get(Uri.parse(
+          'http://192.168.56.1:8080/php_api/order.php?id_order=$idOrder'));
       if (response.statusCode == 200) {
         final jsonData = jsonDecode(response.body);
-        orderDetail = List<OrderDetailModel>.from(jsonData.map((item) => OrderDetailModel.fromJson(item)));
+        orderDetail = List<OrderDetailModel>.from(
+            jsonData.map((item) => OrderDetailModel.fromJson(item)));
       }
     } catch (error) {
       print(error);
     }
     return orderDetail;
+  }
+
+  //updateOrderStatus
+  Future<bool> updateOrderStatus(int idOrder, String orderStatus) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://192.168.56.1:8080/php_api/order.php?'),
+        body: {
+          'id_order': idOrder.toString(),
+          'order_status': orderStatus,
+        },
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      print(error);
+      return false;
+    }
   }
 }

@@ -91,11 +91,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                             children: [
                                               AspectRatio(
                                                 aspectRatio: 1.5,
-                                                child: Image.asset(
-                                                  favoriteProducts
-                                                      .favoriteProducts[index]
-                                                      .imageUrl,
-                                                  fit: BoxFit.cover,
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(15),
+                                                  child: Image.asset(
+                                                    favoriteProducts
+                                                        .favoriteProducts[index]
+                                                        .imageUrl,
+                                                    fit: BoxFit.cover,
+                                                  ),
                                                 ),
                                               ),
                                               const SizedBox(

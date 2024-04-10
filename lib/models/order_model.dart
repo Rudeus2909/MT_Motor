@@ -2,11 +2,13 @@ class OrderModel {
   final int idOrder;
   final int idUser;
   final String orderTime;
+  final String orderStatus;
 
   OrderModel({
     required this.idOrder,
     required this.idUser,
     required this.orderTime,
+    required this.orderStatus,
   });
 
   static OrderModel fromJson(Map<String, dynamic> json) {
@@ -14,6 +16,7 @@ class OrderModel {
       idOrder: json['id_order'],
       idUser: json['id_user'],
       orderTime: json['order_time'],
+      orderStatus: json['order_status'],
     );
   }
 }

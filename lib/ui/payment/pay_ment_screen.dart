@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:motor_app/services/login_service.dart';
-import 'package:motor_app/ui/payment/order_manager.dart';
+import 'package:motor_app/ui/orders/order_manager.dart';
 import 'package:motor_app/ui/products/products_manager.dart';
 import 'package:motor_app/ui/widgets/text_form.dart';
 import 'package:provider/provider.dart';
@@ -133,9 +133,12 @@ class _PayMentScreenState extends State<PayMentScreen> {
                                 ),
                               ],
                             ),
-                            child: Image.asset(
-                              productColorInfo.productColorInfo[0].imageUrl,
-                              fit: BoxFit.cover,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(30),
+                              child: Image.asset(
+                                productColorInfo.productColorInfo[0].imageUrl,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),
