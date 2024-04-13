@@ -49,6 +49,8 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
             ),
             Consumer<OrderManager>(
               builder: (context, orderManager, child) {
+                var orderStatus =
+                    orderManager.findById(widget.idOrder)!.orderStatus;
                 if (orderManager.orderDetail.isNotEmpty) {
                   return Column(
                     children: [
@@ -64,14 +66,54 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            'Ngày đặt hàng: ',
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          Text(orderManager.orders[0].orderTime),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.only(left: 25, right: 25),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  'Ngày đặt hàng: ',
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                Text(orderManager.orders[0].orderTime),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Trạng thái đơn hàng: ',
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                Text(
+                                  orderStatus,
+                                  style: orderStatus == "Đã xác nhận"
+                                      ? const TextStyle(
+                                          color: Colors.green,
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold
+                                        )
+                                      : orderStatus == "Chờ xác nhận"
+                                          ? const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 17,
+                                          fontWeight: FontWeight.bold
+                                            )
+                                          : const TextStyle(
+                                              color: Colors.red,
+                                              fontSize: 17,
+                                          fontWeight: FontWeight.bold
+                                            ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                       const SizedBox(
                         height: 20,

@@ -7,12 +7,14 @@ class TextForm extends StatelessWidget {
     required this.text,
     required this.textInputType,
     required this.obscure,
+    this.validator,
   });
 
   final TextEditingController controller;
   final String text;
   final TextInputType textInputType;
   final bool obscure;
+  final FormFieldValidator<String>? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,7 @@ class TextForm extends StatelessWidget {
           contentPadding: const EdgeInsets.all(0),
           hintStyle: const TextStyle(height: 1),
         ),
+        validator: validator,
       ),
     );
   }

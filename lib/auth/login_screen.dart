@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:motor_app/services/login_service.dart';
-import 'package:motor_app/ui/cart/cart_screen.dart';
+import 'package:motor_app/ui/admin/admin_home_page.dart';
 import 'package:motor_app/ui/screen.dart';
 import 'package:motor_app/ui/widgets/social_login.dart';
 import 'package:motor_app/ui/widgets/text_form.dart';
@@ -104,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => CartScreen(),
+                            builder: (context) => AdminHomePage(),
                           ),
                         );
                       } else {
@@ -120,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => HomePageScreen(),
+                            builder: (context) => UsersBottomNavigator(),
                           ),
                         );
                       }

@@ -1,31 +1,31 @@
 class ProductDetailModel {
   final int? idProductDetail;
-  final String weight;
-  final String height;
-  final String width;
-  final String length;
-  final String petroTankCapacity;
-  final String engineType;
-  final String cylinderCapacity;
-  final String maximumCapacity;
-  final String oilCapacity;
-  final String fuelConsumption;
-  final String gear;
+  final String? weight;
+  final String? height;
+  final String? width;
+  final String? length;
+  final String? petroTankCapacity;
+  final String? engineType;
+  final String? cylinderCapacity;
+  final String? maximumCapacity;
+  final String? oilCapacity;
+  final String? fuelConsumption;
+  final String? gear;
   final int idProduct;
 
   ProductDetailModel({
     this.idProductDetail,
-    required this.weight,
-    required this.height,
-    required this.width,
-    required this.length,
-    required this.petroTankCapacity,
-    required this.engineType,
-    required this.cylinderCapacity,
-    required this.maximumCapacity,
-    required this.oilCapacity,
-    required this.fuelConsumption,
-    required this.gear,
+    this.weight,
+    this.height,
+    this.width,
+    this.length,
+    this.petroTankCapacity,
+    this.engineType,
+    this.cylinderCapacity,
+    this.maximumCapacity,
+    this.oilCapacity,
+    this.fuelConsumption,
+    this.gear,
     required this.idProduct,
   });
 

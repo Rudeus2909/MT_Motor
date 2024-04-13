@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor_app/services/login_service.dart';
 import 'package:motor_app/services/register_service.dart';
-import 'package:motor_app/ui/cart/cart_screen.dart';
+import 'package:motor_app/ui/admin/admin_home_page.dart';
 import 'package:motor_app/ui/orders/order_manager.dart';
 import 'package:motor_app/ui/products/products_manager.dart';
 import 'ui/category/category_manager.dart';
-import 'package:motor_app/user_manager.dart';
-import 'package:motor_app/user_screen.dart';
+import 'package:motor_app/ui/user/user_manager.dart';
 import 'package:provider/provider.dart';
 import 'ui/screen.dart';
 
@@ -23,8 +22,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => UserManager(),
-          child: const UserScreen(),
+          create: (context) => UserManager()
         ),
         ChangeNotifierProvider(
           create: (context) => LoginService(),
@@ -215,8 +213,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: const SplashView(),
         routes: {
-          HomePageScreen.routeName: (ctx) => const SafeArea(
-                child: HomePageScreen(),
+          UsersBottomNavigator.routeName: (ctx) => const SafeArea(
+                child: UsersBottomNavigator(),
               ),
           LoginScreen.routeName: (ctx) => SafeArea(
                 child: LoginScreen(),
@@ -224,7 +222,7 @@ class MyApp extends StatelessWidget {
           RegisterScreen.routeName: (ctx) => SafeArea(
                 child: RegisterScreen(),
               ),
-          CartScreen.routeName: (ctx) => SafeArea(child: CartScreen()),
+          AdminHomePage.routeName: (ctx) => SafeArea(child: AdminHomePage()),
         },
       ),
     );

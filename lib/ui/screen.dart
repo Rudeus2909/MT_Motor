@@ -1,4 +1,4 @@
-export 'home_page_screen.dart';
+export 'user/users_bottom_navigator.dart';
 
 
 export '../auth/register_screen.dart';

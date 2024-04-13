@@ -7,11 +7,10 @@ import 'package:motor_app/models/product_model.dart';
 import 'package:motor_app/services/product_service.dart';
 
 class ProductManager with ChangeNotifier {
-  List<ProductModel> productList = [];
-
-  List<ProductModel> productListByCategory = [];
   final _productService = ProductService();
 
+  //Hiển thị danh sách tất cả sản phẩm
+  List<ProductModel> productList = [];
   Future<List<ProductModel>> fetchProduct() async {
     try {
       productList = await _productService.fetchProduct();
@@ -29,7 +28,17 @@ class ProductManager with ChangeNotifier {
     return [...productList];
   }
 
+  //Tìm sản phẩm theo id
+  ProductModel? findById(int id) {
+    try {
+      return productList.firstWhere((item) => item.idProduct == id);
+    } catch (error) {
+      return null;
+    }
+  }
+
   /// Hàm này thêm sản phẩm vào danh sách dựa trên danh mục của sản phẩm
+  List<ProductModel> productListByCategory = [];
   Future<List<ProductModel>> fetchProductsByCategory(int idCategory) async {
     if (productList.isEmpty) {
       productList = await _productService.fetchProduct();
@@ -50,9 +59,9 @@ class ProductManager with ChangeNotifier {
     return [...productListByCategory];
   }
 
+  //Hiển thị thông số sản phẩm
   late List<ProductDetailModel> _productDetail = [];
   List<ProductDetailModel> get productDetail => _productDetail;
-
   Future<void> fetchProductDetail(int productId) async {
     try {
       _productDetail = await ProductService().fetchProductDetail(productId);
@@ -60,6 +69,14 @@ class ProductManager with ChangeNotifier {
       print(error);
     }
     notifyListeners();
+  }
+  //Tìm thông số sản phẩm theo id_product
+  ProductDetailModel? findProductDetailById(int id) {
+    try {
+      return productDetail.firstWhere((item) => item.idProduct == id);
+    } catch (error) {
+      return null;
+    }
   }
 
   //Lấy danh sách các màu và các thông tin khác để hiển thị trong trang chi tiết
@@ -74,14 +91,7 @@ class ProductManager with ChangeNotifier {
     notifyListeners();
   }
 
-  ProductModel? findById(int id) {
-    try {
-      return productList.firstWhere((item) => item.idProduct == id);
-    } catch (error) {
-      return null;
-    }
-  }
-
+  //Tìm màu và các thông tin theo id_product
   ProductColorsModel? findProductColorDetailById(int id) {
     try {
       return productColor.firstWhere((item) => item.idProduct == id);
@@ -94,7 +104,8 @@ class ProductManager with ChangeNotifier {
   late List<ProductColorInfoModel> productColorInfo = [];
   Future<void> fetchProductColorInfo(int idProduct, int idColor) async {
     try {
-      productColorInfo = await _productService.fetchProductColorInfo(idProduct, idColor);
+      productColorInfo =
+          await _productService.fetchProductColorInfo(idProduct, idColor);
     } catch (error) {
       print(error);
     }
@@ -121,7 +132,7 @@ class ProductManager with ChangeNotifier {
     }
   }
 
-  //Favorite
+  //Thêm vào yêu thích
   Future favorite(int idProduct, int idUser, int idColor, bool favorite) async {
     _productService.favorite(idProduct, idUser, idColor, favorite);
     notifyListeners();

@@ -374,7 +374,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             buildDetailRow(
                                 title: 'Trọng lượng bản thân',
                                 value: productDetailManager
-                                    .productDetail[0].weight),
+                                        .productDetail[0].weight ??
+                                    "Chưa có thông tin này"),
                             const SizedBox(
                               height: 20,
                             ),
@@ -382,7 +383,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             buildDetailRow(
                                 title: 'Chiều dài',
                                 value: productDetailManager
-                                    .productDetail[0].length),
+                                        .productDetail[0].length ??
+                                    "Chưa có thông tin này"),
                             const SizedBox(
                               height: 20,
                             ),
@@ -390,7 +392,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             buildDetailRow(
                                 title: 'Chiều rộng',
                                 value: productDetailManager
-                                    .productDetail[0].width),
+                                        .productDetail[0].width ??
+                                    "Chưa có thông tin này"),
                             const SizedBox(
                               height: 20,
                             ),
@@ -398,7 +401,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             buildDetailRow(
                                 title: 'Chiều cao',
                                 value: productDetailManager
-                                    .productDetail[0].height),
+                                        .productDetail[0].height ??
+                                    "Chưa có thông tin này"),
                             const SizedBox(
                               height: 20,
                             ),
@@ -406,7 +410,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             buildDetailRow(
                                 title: 'Dung tích bình xăng',
                                 value: productDetailManager
-                                    .productDetail[0].petroTankCapacity),
+                                        .productDetail[0].petroTankCapacity ??
+                                    "Chưa có thông tin này"),
                             const SizedBox(
                               height: 20,
                             ),
@@ -414,7 +419,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             buildDetailRow(
                                 title: 'Dung tích xy-lanh',
                                 value: productDetailManager
-                                    .productDetail[0].cylinderCapacity),
+                                        .productDetail[0].cylinderCapacity ??
+                                    "Chưa có thông tin này"),
                             const SizedBox(
                               height: 20,
                             ),
@@ -422,7 +428,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             buildDetailRow(
                                 title: 'Loại động cơ',
                                 value: productDetailManager
-                                    .productDetail[0].engineType),
+                                        .productDetail[0].engineType ??
+                                    "Chưa có thông tin này"),
                             const SizedBox(
                               height: 20,
                             ),
@@ -430,7 +437,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             buildDetailRow(
                                 title: 'Công suất tối đa',
                                 value: productDetailManager
-                                    .productDetail[0].maximumCapacity),
+                                        .productDetail[0].maximumCapacity ??
+                                    "Chưa có thông tin này"),
                             const SizedBox(
                               height: 20,
                             ),
@@ -438,15 +446,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             buildDetailRow(
                                 title: 'Mức tiêu thu nhiên liệu',
                                 value: productDetailManager
-                                    .productDetail[0].fuelConsumption),
+                                        .productDetail[0].fuelConsumption ??
+                                    "Chưa có thông tin này"),
                             const SizedBox(
                               height: 20,
                             ),
                             const Divider(),
                             buildDetailRow(
                                 title: 'Hộp số',
-                                value:
-                                    productDetailManager.productDetail[0].gear),
+                                value: productDetailManager
+                                        .productDetail[0].gear ??
+                                    "Chưa có thông tin này"),
                           ],
                         )
                       ],

@@ -7,15 +7,13 @@ class UserManager with ChangeNotifier {
   final _userService = UserService();
 
   Future<List<UserModel>> fetchUser() async {
-    
-
     try {
       userList = await _userService.fetchUser();
     } catch (error) {
       print(error);
     }
     return userList;
-  } 
+  }
 
   int get count {
     return userList.length;
@@ -31,4 +29,28 @@ class UserManager with ChangeNotifier {
     }
     notifyListeners();
   }
-} 
+
+  //Cập nhật thông tin người dùng
+  Future updateUserInfo(
+    int idUser,
+    String name,
+    String address,
+    String email,
+    String phone,
+  ) async {
+    await _userService.updateUserInfo(idUser, name, address, email, phone);
+    notifyListeners();
+  }
+
+  //Cập nhật mật khẩu người dùng
+  Future updateUserPassword(int idUser, String password) async {
+    await _userService.updateUserPassword(idUser, password);
+    notifyListeners();
+  }
+
+  //Cập nhật hình ảnh đại diện của người dùng
+  Future updateUserAvatar(int idUser, String imageUrl) async {
+    await _userService.updateUserAvatar(idUser, imageUrl);
+    notifyListeners();
+  }
+}

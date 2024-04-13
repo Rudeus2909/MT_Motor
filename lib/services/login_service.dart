@@ -33,4 +33,13 @@ class LoginService  with ChangeNotifier{
     }
   }
   
+  Future logout() async {
+    try {
+      role = "";
+      idUser = 0;
+      userList = [];
+    } catch (error) {
+      print(error);
+    }
+  }
 }

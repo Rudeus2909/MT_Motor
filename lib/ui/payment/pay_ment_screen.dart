@@ -18,12 +18,14 @@ class PayMentScreen extends StatefulWidget {
 }
 
 class _PayMentScreenState extends State<PayMentScreen> {
-
   @override
   void initState() {
     super.initState();
-    context.read<ProductManager>().fetchProductColorInfo(widget.idProduct, widget.idColor);
+    context
+        .read<ProductManager>()
+        .fetchProductColorInfo(widget.idProduct, widget.idColor);
   }
+
   final TextEditingController ordererController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -48,52 +50,73 @@ class _PayMentScreenState extends State<PayMentScreen> {
             const SizedBox(
               height: 25,
             ),
-            Text(
-              'Thông tin đặt mua',
-              style: Theme.of(context).textTheme.titleLarge,
+            Padding(
+              padding: const EdgeInsets.only(right: 25, left: 10),
+              child: Text(
+                'Thông tin đặt mua',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
             ),
             const SizedBox(
               height: 15,
             ),
-            TextForm(
-              controller: ordererController,
+            OrderInfo(
               text: 'Họ và tên',
-              textInputType: TextInputType.text,
-              obscure: false,
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: TextForm(
+                  controller: ordererController,
+                  text: 'Họ và tên',
+                  textInputType: TextInputType.text,
+                  obscure: false,
+                ),
+              ),
             ),
             const SizedBox(
               height: 6,
             ),
-            TextForm(
-              controller: emailController,
-              text: 'Email',
-              textInputType: TextInputType.emailAddress,
-              obscure: false,
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: TextForm(
+                controller: emailController,
+                text: 'Email',
+                textInputType: TextInputType.emailAddress,
+                obscure: false,
+              ),
             ),
             const SizedBox(
               height: 6,
             ),
-            TextForm(
-              controller: addressController,
-              text: 'Địa chỉ',
-              textInputType: TextInputType.streetAddress,
-              obscure: false,
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: TextForm(
+                controller: addressController,
+                text: 'Địa chỉ',
+                textInputType: TextInputType.streetAddress,
+                obscure: false,
+              ),
             ),
             const SizedBox(
               height: 6,
             ),
-            TextForm(
-              controller: phoneController,
-              text: 'Số điện thoại',
-              textInputType: TextInputType.phone,
-              obscure: false,
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: TextForm(
+                controller: phoneController,
+                text: 'Số điện thoại',
+                textInputType: TextInputType.phone,
+                obscure: false,
+              ),
             ),
             const SizedBox(
               height: 25,
             ),
-            Text(
-              'Thông tin sản phẩm',
-              style: Theme.of(context).textTheme.titleLarge,
+            Padding(
+              padding: const EdgeInsets.only(right: 25, left: 10),
+              child: Text(
+                'Thông tin sản phẩm',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
             ),
             const SizedBox(
               height: 15,
@@ -167,7 +190,8 @@ class _PayMentScreenState extends State<PayMentScreen> {
                                 textAlign: TextAlign.center,
                               ),
                               Text(
-                                productColorInfo.productColorInfo[0].price.toString(),
+                                productColorInfo.productColorInfo[0].price
+                                    .toString(),
                                 style: Theme.of(context).textTheme.titleSmall,
                                 textAlign: TextAlign.center,
                               )
@@ -233,11 +257,13 @@ class _PayMentScreenState extends State<PayMentScreen> {
                 if (productColorInfo.productColorInfo.isNotEmpty) {
                   return ElevatedButton(
                     onPressed: () async {
-                      int quantityAfterOrdering = productColorInfo.productColorInfo[0].amount - 1;
+                      int quantityAfterOrdering =
+                          productColorInfo.productColorInfo[0].amount - 1;
                       var idUser = context.read<LoginService>().idUser;
                       var total = productColorInfo.productColorInfo[0].price;
                       var orderTime = DateTime.now().toString();
-                      var imageUrl = productColorInfo.productColorInfo[0].imageUrl;
+                      var imageUrl =
+                          productColorInfo.productColorInfo[0].imageUrl;
                       await context.read<OrderManager>().addOrder(
                             idUser,
                             orderTime,
@@ -277,6 +303,29 @@ class _PayMentScreenState extends State<PayMentScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class OrderInfo extends StatelessWidget {
+  const OrderInfo({super.key, required this.text, required this.child});
+
+  final String text;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10),
+            child: Text(text),
+          ),
+          child,
+        ],
       ),
     );
   }

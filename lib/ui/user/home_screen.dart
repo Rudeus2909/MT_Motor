@@ -6,7 +6,7 @@ import 'package:motor_app/ui/products/product_detail_screen.dart';
 import 'package:motor_app/ui/products/products_manager.dart';
 import 'package:motor_app/ui/widgets/custom_appbar.dart';
 import 'package:motor_app/ui/widgets/header_container.dart';
-import 'package:motor_app/user_manager.dart';
+import 'package:motor_app/ui/user/user_manager.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     width: 10,
                                   ),
                                   Text(
-                                    userManager.user[0].name,
+                                    userManager.user[0].name ?? "Người dùng",
                                     style: Theme.of(context)
                                         .textTheme
                                         .headlineSmall,

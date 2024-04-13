@@ -42,7 +42,7 @@ class CategoryListTile extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Image.asset(
+                  child: Image.network(
                     category.categoryImage,
                     fit: BoxFit.cover,
                   ),
