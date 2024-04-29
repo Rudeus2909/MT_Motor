@@ -38,7 +38,7 @@ class TextForm extends StatelessWidget {
           hintText: text,
           border: InputBorder.none,
           contentPadding: const EdgeInsets.all(0),
-          hintStyle: const TextStyle(height: 1),
+          hintStyle: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.black),
         ),
         validator: validator,
       ),

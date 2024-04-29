@@ -51,7 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     'Xin chào',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .headlineSmall,
+                                        .headlineSmall!
+                                        .apply(color: Colors.black),
                                   ),
                                   const SizedBox(
                                     width: 10,
@@ -60,7 +61,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     userManager.user[0].name ?? "Người dùng",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .headlineSmall,
+                                        .headlineSmall!
+                                        .apply(color: Colors.black),
                                   ),
                                 ],
                               ),
@@ -167,7 +169,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Text(
                         'Sản phẩm',
-                        style: Theme.of(context).textTheme.headlineSmall,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall!
+                            .apply(color: Colors.black),
                       ),
                     ],
                   ),
@@ -226,24 +231,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     .productName,
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .headlineSmall,
+                                                    .headlineSmall!
+                                                    .apply(color: Colors.black),
                                               ),
                                               IconButton(
                                                 onPressed: () {
                                                   Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ProductDetailScreen(
-                                                                productId: productManager
-                                                                    .someProduct[
-                                                                        selectedIndex]
-                                                                    .idProduct!),
-                                                      ));
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ProductDetailScreen(
+                                                              productId: productManager
+                                                                  .someProduct[
+                                                                      selectedIndex]
+                                                                  .idProduct!),
+                                                    ),
+                                                  );
                                                 },
                                                 icon: const Icon(
                                                   Icons.arrow_forward,
                                                   size: 30,
+                                                  color: Colors.black,
                                                 ),
                                               ),
                                             ],
@@ -339,7 +347,10 @@ class Advertise extends StatelessWidget {
               ),
               Text(
                 'Tin Tức & Khuyến mãi',
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall!
+                    .apply(color: Colors.black),
               ),
             ],
           ),
@@ -434,6 +445,10 @@ class SearchBar extends StatelessWidget {
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: "Tìm kiếm...",
+            hintStyle: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .apply(color: Colors.black),
             suffixIcon: IconButton(
               icon: const Icon(Icons.search),
               onPressed: onSearch,

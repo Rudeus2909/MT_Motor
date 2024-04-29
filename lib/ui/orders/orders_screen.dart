@@ -32,7 +32,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 CustomAppbar(
                   title: Text(
                     'Đơn hàng của ban',
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    style: Theme.of(context).textTheme.headlineMedium!.apply(color: Colors.black),
                   ),
                   showBackArrow: true,
                 ),
@@ -88,7 +88,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                       order.toString(),
                                                   style: Theme.of(context)
                                                       .textTheme
-                                                      .headlineSmall,
+                                                      .headlineSmall!
+                                                      .apply(
+                                                          color: Colors.black),
                                                 ),
                                                 const SizedBox(
                                                   height: 15,
@@ -97,13 +99,22 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                   'Ngày đặt: ',
                                                   style: Theme.of(context)
                                                       .textTheme
-                                                      .titleLarge,
+                                                      .titleLarge!
+                                                      .apply(
+                                                          color: Colors.black),
                                                 ),
                                                 const SizedBox(
                                                   height: 8,
                                                 ),
-                                                Text(orderManager
-                                                    .orders[index].orderTime),
+                                                Text(
+                                                  orderManager
+                                                      .orders[index].orderTime,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .apply(
+                                                          color: Colors.black),
+                                                ),
                                                 const SizedBox(
                                                   height: 15,
                                                 ),
@@ -111,7 +122,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                   'Trạng thái đơn hàng: ',
                                                   style: Theme.of(context)
                                                       .textTheme
-                                                      .titleLarge,
+                                                      .titleLarge!
+                                                      .apply(
+                                                          color: Colors.black),
                                                 ),
                                                 const SizedBox(
                                                   height: 8,
@@ -148,16 +161,18 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                     .orders[index]
                                                     .idOrder;
                                                 Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          OrderDetailScreen(
-                                                              idOrder: idOrder),
-                                                    ));
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        OrderDetailScreen(
+                                                            idOrder: idOrder),
+                                                  ),
+                                                );
                                               },
                                               icon: const Icon(
                                                 Icons.arrow_forward_sharp,
                                                 size: 30,
+                                                color: Colors.black,
                                               ),
                                             )
                                           ],

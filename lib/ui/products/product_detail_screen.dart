@@ -314,7 +314,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                                 ? Colors.blue
                                                                     .shade900
                                                                 : Colors
-                                                                    .transparent,
+                                                                    .white,
                                                         child: CircleAvatar(
                                                           radius: 23,
                                                           backgroundColor:
@@ -506,7 +506,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       },
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(10),
-                          backgroundColor: Colors.black,
+                          backgroundColor: Colors.red,
                           side: const BorderSide(color: Colors.black)),
                       child: const Text('Thêm vào yêu thích'),
                     ),
@@ -540,7 +540,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       },
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(10),
-                          backgroundColor: Colors.black,
+                          backgroundColor: Colors.lightBlue,
                           side: const BorderSide(color: Colors.black)),
                       child: const Text('Đặt mua ngay'),
                     ),

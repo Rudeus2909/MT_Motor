@@ -45,7 +45,7 @@ class _PayMentScreenState extends State<PayMentScreen> {
                   CustomAppbar(
                     title: Text(
                       'Đặt mua sản phẩm',
-                      style: Theme.of(context).textTheme.headlineMedium,
+                      style: Theme.of(context).textTheme.headlineMedium!.apply(color: Colors.black),
                     ),
                     showBackArrow: true,
                   ),
@@ -83,37 +83,46 @@ class _PayMentScreenState extends State<PayMentScreen> {
             const SizedBox(
               height: 6,
             ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: TextForm(
-                controller: emailController,
-                text: 'Email',
-                textInputType: TextInputType.emailAddress,
-                obscure: false,
+            OrderInfo(
+              text: 'E-mail',
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: TextForm(
+                  controller: emailController,
+                  text: 'Email',
+                  textInputType: TextInputType.emailAddress,
+                  obscure: false,
+                ),
               ),
             ),
             const SizedBox(
               height: 6,
             ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: TextForm(
-                controller: addressController,
-                text: 'Địa chỉ',
-                textInputType: TextInputType.streetAddress,
-                obscure: false,
+            OrderInfo(
+              text: 'Địa chỉ',
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: TextForm(
+                  controller: addressController,
+                  text: 'Địa chỉ',
+                  textInputType: TextInputType.streetAddress,
+                  obscure: false,
+                ),
               ),
             ),
             const SizedBox(
               height: 6,
             ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: TextForm(
-                controller: phoneController,
-                text: 'Số điện thoại',
-                textInputType: TextInputType.phone,
-                obscure: false,
+            OrderInfo(
+              text: 'Số điện thoại',
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: TextForm(
+                  controller: phoneController,
+                  text: 'Số điện thoại',
+                  textInputType: TextInputType.phone,
+                  obscure: false,
+                ),
               ),
             ),
             const SizedBox(
@@ -182,37 +191,37 @@ class _PayMentScreenState extends State<PayMentScreen> {
                             TableRow(children: [
                               Text(
                                 'Tên sản phẩm',
-                                style: Theme.of(context).textTheme.titleLarge,
+                                style: Theme.of(context).textTheme.titleLarge!.apply(color: Colors.black),
                                 textAlign: TextAlign.center,
                               ),
                               Text(
                                 productName,
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.titleSmall,
+                                style: Theme.of(context).textTheme.titleSmall!.apply(color: Colors.black),
                               )
                             ]),
                             TableRow(children: [
                               Text(
                                 'Giá',
-                                style: Theme.of(context).textTheme.titleLarge,
+                                style: Theme.of(context).textTheme.titleLarge!.apply(color: Colors.black),
                                 textAlign: TextAlign.center,
                               ),
                               Text(
                                 productColorInfo.productColorInfo[0].price
                                     .toString(),
-                                style: Theme.of(context).textTheme.titleSmall,
+                                style: Theme.of(context).textTheme.titleSmall!.apply(color: Colors.black),
                                 textAlign: TextAlign.center,
                               )
                             ]),
                             TableRow(children: [
                               Text(
                                 'Màu sắc',
-                                style: Theme.of(context).textTheme.titleLarge,
+                                style: Theme.of(context).textTheme.titleLarge!.apply(color: Colors.black),
                                 textAlign: TextAlign.center,
                               ),
                               Text(
                                 productColorInfo.productColorInfo[0].colorName,
-                                style: Theme.of(context).textTheme.titleSmall,
+                                style: Theme.of(context).textTheme.titleSmall!.apply(color: Colors.black),
                                 textAlign: TextAlign.center,
                               )
                             ])
@@ -333,7 +342,7 @@ class OrderInfo extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 10, right: 10),
-            child: Text(text),
+            child: Text(text, style: Theme.of(context).textTheme.bodyMedium,),
           ),
           child,
         ],

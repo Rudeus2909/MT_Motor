@@ -36,7 +36,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                       alignment: Alignment.center,
                       child: Text(
                         'Sản phẩm đã thích',
-                        style: Theme.of(context).textTheme.headlineMedium,
+                        style: Theme.of(context).textTheme.headlineMedium!.apply(color: Colors.black),
                       ),
                     ),
                   ),
@@ -118,7 +118,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                                           .productName,
                                                       style: Theme.of(context)
                                                           .textTheme
-                                                          .titleLarge,
+                                                          .titleLarge!.apply(color: Colors.black),
                                                     ),
                                                     const SizedBox(
                                                       height: 20,
@@ -133,7 +133,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                                           style: Theme.of(
                                                                   context)
                                                               .textTheme
-                                                              .headlineSmall,
+                                                              .headlineSmall!.apply(color: Colors.black),
                                                         ),
                                                         const SizedBox(
                                                           width: 10,
@@ -146,7 +146,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                                           style:
                                                               Theme.of(context)
                                                                   .textTheme
-                                                                  .titleLarge,
+                                                                  .titleLarge!.apply(color: Colors.black),
                                                         ),
                                                       ],
                                                     ),
