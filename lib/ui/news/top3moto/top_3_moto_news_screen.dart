@@ -8,13 +8,9 @@ class Top3MotoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Tin Tức và khuyến mãi',
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
       body: const Top3Moto(

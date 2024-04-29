@@ -8,7 +8,7 @@ class SuzukiSaleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tin Tức và khuyến mãi'),
+        title: Text('Tin Tức và khuyến mãi', style: Theme.of(context).textTheme.headlineMedium,),
       ),
       body: const SuzukiSale(imageUrl1: 'assets/news/SuzukiSale.webp',),
     );

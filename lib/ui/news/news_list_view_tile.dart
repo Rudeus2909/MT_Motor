@@ -20,9 +20,7 @@ class NewsListViewTile extends StatelessWidget {
           title,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(context).textTheme.titleLarge,
         ),
         const Padding(padding: EdgeInsets.only(bottom: 2.0)),
         Expanded(
@@ -30,18 +28,12 @@ class NewsListViewTile extends StatelessWidget {
             subtitle,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 12.0,
-              color: Colors.black54,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
         Text(
           publishDate,
-          style: const TextStyle(
-            fontSize: 12.0,
-            color: Colors.black87,
-          ),
+          style: Theme.of(context).textTheme.bodySmall,
         ),
       ],
     );

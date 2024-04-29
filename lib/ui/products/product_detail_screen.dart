@@ -36,7 +36,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               productColorManager.productColor.isNotEmpty) {
             return Scaffold(
               appBar: AppBar(
-                title: const Text('Thông tin chi tiết'),
+                automaticallyImplyLeading: false,
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back,),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                title: Text(
+                  'Thông tin chi tiết',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
                 bottom: const TabBar(
                   tabs: <Widget>[
                     Tab(

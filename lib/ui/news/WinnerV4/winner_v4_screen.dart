@@ -8,7 +8,7 @@ class WinnerV4Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tin Tức và khuyến mãi'),
+        title: Text('Tin Tức và khuyến mãi', style:  Theme.of(context).textTheme.headlineMedium,),
       ),
       body: const WinnerV4(
           imageUrl1: 'assets/news/WinnerV4.jpg',

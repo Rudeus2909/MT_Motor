@@ -8,7 +8,7 @@ class CB350Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tin Tức và khuyến mãi'),
+        title: Text('Tin Tức và khuyến mãi', style: Theme.of(context).textTheme.headlineMedium,),
       ),
       body: const CB350(
         imageUrl1: 'assets/news/CB350_1.jpg',

@@ -7,6 +7,7 @@ import 'package:motor_app/ui/widgets/custom_list_tile.dart';
 import 'package:motor_app/ui/user/user_setting_screen.dart';
 import 'package:motor_app/ui/widgets/custom_appbar.dart';
 import 'package:motor_app/manager/user_manager.dart';
+import 'package:motor_app/utils/app_setting.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/header_container.dart';
@@ -19,6 +20,8 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  bool switchValue = false;
+
   @override
   void initState() {
     super.initState();
@@ -87,10 +90,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         children: [
                           Text(
                             'Cài đặt tài khoản',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineSmall!
-                                .apply(color: Colors.black),
+                            style: Theme.of(context).textTheme.headlineSmall!,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -132,11 +132,12 @@ class _SettingScreenState extends State<SettingScreen> {
                         onTap: () {
                           var idUser = context.read<LoginService>().idUser;
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    OrdersScreen(idUser: idUser),
-                              ));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  OrdersScreen(idUser: idUser),
+                            ),
+                          );
                         },
                       ),
                       CustomListTile(
@@ -207,10 +208,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         children: [
                           Text(
                             'Cài đặt ứng dụng',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineSmall!
-                                .apply(color: Colors.black),
+                            style: Theme.of(context).textTheme.headlineSmall!,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -230,8 +228,13 @@ class _SettingScreenState extends State<SettingScreen> {
                         title: 'Đổi chế độ',
                         subtitle: 'Đổi chế độ sáng tối',
                         trailing: Switch(
-                          value: true,
-                          onChanged: (value) {},
+                          value: switchValue,
+                          onChanged: (value) {
+                            context.read<AppSettings>().toggleTheme();
+                            setState(() {
+                              switchValue = value;
+                            });
+                          },
                         ),
                       ),
                     ],

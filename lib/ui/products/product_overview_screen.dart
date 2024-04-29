@@ -34,7 +34,7 @@ class _ProductOverViewScreenState extends State<ProductOverViewScreen> {
                   CustomAppbar(
                     title: Text(
                       'Mẫu xe',
-                      style: Theme.of(context).textTheme.headlineMedium,
+                      style: Theme.of(context).textTheme.headlineMedium!.apply(color: Colors.black),
                     ),
                     showBackArrow: true,
                   ),
@@ -144,7 +144,7 @@ class ProductListTile extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
                     productName,
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    style: Theme.of(context).textTheme.headlineSmall!.apply(color: Colors.black),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -152,8 +152,9 @@ class ProductListTile extends StatelessWidget {
               IconButton(
                 onPressed: onFavorite,
                 icon: const Icon(
-                  Icons.favorite,
-                  color: Colors.red,
+                  Icons.arrow_forward,
+                  color: Colors.black,
+                  size: 30,
                 ),
               ),
             ],
