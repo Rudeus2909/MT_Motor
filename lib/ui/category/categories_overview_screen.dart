@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:motor_app/ui/category/category_grid.dart';
-import 'package:motor_app/ui/category/category_manager.dart';
+import 'package:motor_app/manager/category_manager.dart';
 import 'package:motor_app/ui/widgets/custom_appbar.dart';
 import 'package:motor_app/ui/widgets/header_container.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +29,7 @@ class _CategoryOverViewScreenState extends State<CategoryOverViewScreen> {
                     title: Container(
                       alignment: Alignment.center,
                       child: Text(
-                        'Danh mục sản phẩm',
+                        'Danh mục hãng xe',
                         style: Theme.of(context)
                             .textTheme
                             .headlineMedium!

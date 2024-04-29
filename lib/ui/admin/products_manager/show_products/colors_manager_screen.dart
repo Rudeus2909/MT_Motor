@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:motor_app/ui/admin/products_manager/add_products/add_product_color_screen.dart';
 import 'package:motor_app/ui/admin/products_manager/edit_products/edit_product_color_detail_screen.dart';
-import 'package:motor_app/ui/products/products_manager.dart';
+import 'package:motor_app/manager/products_manager.dart';
+import 'package:motor_app/ui/admin/products_manager/show_products/products_manager_screen.dart';
 import 'package:motor_app/ui/widgets/custom_appbar.dart';
 import 'package:motor_app/ui/widgets/header_container.dart';
 import 'package:provider/provider.dart';
 
 class ColorsManagerScreen extends StatefulWidget {
-  const ColorsManagerScreen({super.key, required this.idProduct});
+  const ColorsManagerScreen({super.key, required this.idProduct, required this.idCategory});
 
   final int idProduct;
+  final int idCategory;
 
   @override
   State<ColorsManagerScreen> createState() => _ColorsManagerScreenState();
@@ -58,7 +62,7 @@ class _ColorsManagerScreenState extends State<ColorsManagerScreen> {
                     );
                   }
                   return RefreshIndicator(
-                    child: const ProductColorsList(),
+                    child: ProductColorsList(idCategory: widget.idCategory,),
                     onRefresh: () => context
                         .read<ProductManager>()
                         .fetchProductColors(widget.idProduct),
@@ -69,14 +73,42 @@ class _ColorsManagerScreenState extends State<ColorsManagerScreen> {
           ],
         ),
       ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 5),
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(5),
+            topRight: Radius.circular(5),
+          ),
+        ),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddProductColorScreen(
+                  idProduct: widget.idProduct,
+                  idCategory: widget.idCategory,
+                ),
+              ),
+            );
+          },
+          child: const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text('Thêm màu cho sản phẩm'),
+          ),
+        ),
+      ),
     );
   }
 }
 
 class ProductColorsList extends StatelessWidget {
   const ProductColorsList({
-    super.key,
+    super.key, required this.idCategory,
   });
+  
+  final int idCategory;
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +139,27 @@ class ProductColorsList extends StatelessWidget {
                         ),
                       );
                     },
-                    onDeletePressed: () {},
+                    onDeletePressed: () {
+                      context.read<ProductManager>().deleteProductColor(
+                            productManager.productColor[index].idProduct,
+                            productManager.productColor[index].idColor!,
+                          );
+                      Fluttertoast.showToast(
+                        msg: "Xóa thành công",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.grey,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProductsManagerScreen(idCategory: idCategory),
+                        ),
+                      );
+                    },
                   ),
                   const SizedBox(
                     height: 25,

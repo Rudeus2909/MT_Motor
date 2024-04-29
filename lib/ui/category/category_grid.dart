@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:motor_app/models/category_model.dart';
 import 'package:motor_app/ui/category/category_grid_tile.dart';
-import 'package:motor_app/ui/category/category_manager.dart';
+import 'package:motor_app/manager/category_manager.dart';
 import 'package:provider/provider.dart';
 
 class CategoryGrid extends StatelessWidget {

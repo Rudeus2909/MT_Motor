@@ -3,10 +3,11 @@ import 'package:motor_app/services/login_service.dart';
 import 'package:motor_app/ui/news/news_overview_screen.dart';
 import 'package:motor_app/ui/products/favorite_screen.dart';
 import 'package:motor_app/ui/products/product_detail_screen.dart';
-import 'package:motor_app/ui/products/products_manager.dart';
+import 'package:motor_app/manager/products_manager.dart';
+import 'package:motor_app/ui/user/search_products.dart';
 import 'package:motor_app/ui/widgets/custom_appbar.dart';
 import 'package:motor_app/ui/widgets/header_container.dart';
-import 'package:motor_app/ui/user/user_manager.dart';
+import 'package:motor_app/manager/user_manager.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -26,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   int selectedIndex = 0;
+  final searchKey = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +110,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
 
                   //SearchBar
-                  const SearchBar(),
+                  SearchBar(
+                    searchKey: searchKey,
+                    onSearch: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SearchProductsScreen(
+                            searchKey: searchKey.text,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                   const SizedBox(
                     height: 50,
                   ),
@@ -192,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       selectedIndex = index;
                                       return Column(
                                         children: [
-                                          Image.asset(
+                                          Image.network(
                                             productManager.someProduct[index]
                                                 .productImage,
                                             fit: BoxFit.cover,
@@ -397,7 +411,12 @@ class Advertise extends StatelessWidget {
 class SearchBar extends StatelessWidget {
   const SearchBar({
     super.key,
+    required this.searchKey,
+    this.onSearch,
   });
+
+  final TextEditingController searchKey;
+  final void Function()? onSearch;
 
   @override
   Widget build(BuildContext context) {
@@ -405,25 +424,21 @@ class SearchBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.only(left: 12, right: 12, top: 5, bottom: 5),
         decoration: BoxDecoration(
             color: Colors.white38,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: Colors.black)),
-        child: Row(
-          children: [
-            const Icon(Icons.search),
-            const SizedBox(
-              width: 20,
+        child: TextFormField(
+          controller: searchKey,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            hintText: "Tìm kiếm...",
+            suffixIcon: IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: onSearch,
             ),
-            Text(
-              'Tìm kiếm sản phẩm',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodySmall!
-                  .apply(color: Colors.black),
-            ),
-          ],
+          ),
         ),
       ),
     );

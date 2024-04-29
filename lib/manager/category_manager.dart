@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:motor_app/services/category_service.dart';
 
-import '../../models/category_model.dart';
+import '../models/category_model.dart';
 
 class CategoryManager with ChangeNotifier {
   List<CategoryModel> categoryList = [];

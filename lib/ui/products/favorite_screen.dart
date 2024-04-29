@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:motor_app/ui/products/products_manager.dart';
+import 'package:motor_app/manager/products_manager.dart';
 import 'package:motor_app/ui/widgets/custom_appbar.dart';
 import 'package:motor_app/ui/widgets/header_container.dart';
 import 'package:provider/provider.dart';
@@ -93,7 +93,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                                 aspectRatio: 1.5,
                                                 child: ClipRRect(
                                                   borderRadius: BorderRadius.circular(15),
-                                                  child: Image.asset(
+                                                  child: Image.network(
                                                     favoriteProducts
                                                         .favoriteProducts[index]
                                                         .imageUrl,

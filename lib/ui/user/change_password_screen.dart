@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:motor_app/ui/user/user_manager.dart';
+import 'package:motor_app/manager/user_manager.dart';
 import 'package:motor_app/ui/widgets/custom_appbar.dart';
 import 'package:motor_app/ui/widgets/header_container.dart';
 import 'package:motor_app/ui/widgets/text_form.dart';

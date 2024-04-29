@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:motor_app/models/product_model.dart';
+import 'package:motor_app/ui/admin/products_manager/add_products/add_product_screen.dart';
 import 'package:motor_app/ui/admin/products_manager/edit_products/edit_product_specifications.dart';
 import 'package:motor_app/ui/admin/products_manager/show_products/colors_manager_screen.dart';
-import 'package:motor_app/ui/products/products_manager.dart';
+import 'package:motor_app/manager/products_manager.dart';
 import 'package:motor_app/ui/widgets/custom_appbar.dart';
 import 'package:motor_app/ui/widgets/header_container.dart';
 import 'package:provider/provider.dart';
@@ -17,12 +17,11 @@ class ProductsManagerScreen extends StatefulWidget {
 }
 
 class _ProductsManagerScreenState extends State<ProductsManagerScreen> {
-  late final Future<List<ProductModel>> _fetchProduct;
 
   @override
   void initState() {
     super.initState();
-    _fetchProduct = context
+    context
         .read<ProductManager>()
         .fetchProductsByCategory(widget.idCategory);
   }
@@ -49,85 +48,119 @@ class _ProductsManagerScreenState extends State<ProductsManagerScreen> {
                 ],
               ),
             ),
-            SizedBox(
-              height: 1000,
-              child: FutureBuilder(
-                future: _fetchProduct,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  return RefreshIndicator(
-                    child: const ProductList(),
-                    onRefresh: () => context
-                        .read<ProductManager>()
-                        .fetchProductsByCategory(widget.idCategory),
-                  );
-                },
-              ),
+
+            Consumer<ProductManager>(
+              builder: (context, productManager, child) {
+                return SizedBox(
+                  height: 1000,
+                  child: ListView.builder(
+                    itemCount: productManager.productListByCategory.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          ProductListTile(
+                            productImageUrl: productManager
+                                .productListByCategory[index].productImage,
+                            productName: productManager
+                                .productListByCategory[index].productName,
+                            onEditPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      EditProductSpecificationScreen(
+                                    idProduct: productManager
+                                        .productListByCategory[index]
+                                        .idProduct!,
+                                  ),
+                                ),
+                              );
+                            },
+                            onDeletePressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                  title: Text('Xóa sản phẩm'),
+                                  content: Text(
+                                      'Bạn có chắc chắn muốn xóa sản phẩm này không'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text('Không'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () async {
+                                        context
+                                            .read<ProductManager>()
+                                            .deleteProduct(
+                                              productManager
+                                                  .productListByCategory[index]
+                                                  .idProduct!,
+                                            );
+                                        context.read<ProductManager>().removeProduct(productManager
+                                        .productListByCategory[index]
+                                        .idProduct!);
+                                        Navigator.of(context).pop(true);
+                                        await context.read<ProductManager>().fetchProductsByCategory(widget.idCategory);
+                                      },
+                                      child: const Text('Có'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ColorsManagerScreen(
+                                      idProduct: productManager
+                                          .productListByCategory[index]
+                                          .idProduct!,
+                                          idCategory: widget.idCategory,),
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(
+                            height: 25,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                );
+              },
             ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class ProductList extends StatelessWidget {
-  const ProductList({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<ProductManager>(
-      builder: (context, productManager, child) {
-        return SizedBox(
-          height: 1000,
-          child: ListView.builder(
-            itemCount: productManager.productListByCategory.length,
-            itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  ProductListTile(
-                    productImageUrl: productManager
-                        .productListByCategory[index].productImage,
-                    productName:
-                        productManager.productListByCategory[index].productName,
-                    onEditPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                EditProductSpecificationScreen(
-                              idProduct: productManager
-                                  .productListByCategory[index].idProduct!,
-                            ),
-                          ));
-                    },
-                    onDeletePressed: () {},
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ColorsManagerScreen(
-                              idProduct: productManager
-                                  .productListByCategory[index].idProduct!),
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                ],
-              );
-            },
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 5),
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(5),
+            topRight: Radius.circular(5),
           ),
-        );
-      },
+        ),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    AddProductScreen(idCategory: widget.idCategory),
+              ),
+            );
+          },
+          child: const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text('Thêm sản phẩm'),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -178,7 +211,7 @@ class ProductListTile extends StatelessWidget {
                 aspectRatio: 1.3,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
+                  child: Image.network(
                     productImageUrl,
                     fit: BoxFit.cover,
                   ),

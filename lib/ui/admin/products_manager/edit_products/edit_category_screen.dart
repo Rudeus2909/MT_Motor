@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:motor_app/models/category_model.dart';
 import 'package:motor_app/ui/admin/products_manager/show_products/categories_manager_screen.dart';
-import 'package:motor_app/ui/category/category_manager.dart';
+import 'package:motor_app/manager/category_manager.dart';
 import 'package:motor_app/ui/widgets/custom_appbar.dart';
 import 'package:motor_app/ui/widgets/header_container.dart';
 import 'package:motor_app/ui/widgets/text_form.dart';

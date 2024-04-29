@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:motor_app/services/login_service.dart';
 import 'package:motor_app/services/register_service.dart';
 import 'package:motor_app/ui/admin/admin_home_page.dart';
-import 'package:motor_app/ui/orders/order_manager.dart';
-import 'package:motor_app/ui/products/products_manager.dart';
-import 'ui/category/category_manager.dart';
-import 'package:motor_app/ui/user/user_manager.dart';
+import 'package:motor_app/manager/order_manager.dart';
+import 'package:motor_app/manager/products_manager.dart';
+import 'manager/category_manager.dart';
+import 'package:motor_app/manager/user_manager.dart';
 import 'package:provider/provider.dart';
 import 'ui/screen.dart';
 
@@ -102,7 +102,6 @@ class MyApp extends StatelessWidget {
               backgroundColor: Colors.red,
               disabledBackgroundColor: Colors.grey,
               disabledForegroundColor: Colors.grey,
-              side: const BorderSide(color: Colors.red),
               padding: const EdgeInsets.symmetric(vertical: 2),
               textStyle: const TextStyle(
                   fontSize: 16,

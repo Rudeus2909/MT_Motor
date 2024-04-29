@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:motor_app/models/product_model.dart';
-import 'package:motor_app/ui/admin/admin_home_page.dart';
-import 'package:motor_app/ui/products/products_manager.dart';
+import 'package:motor_app/ui/admin/products_manager/show_products/categories_manager_screen.dart';
+import 'package:motor_app/manager/products_manager.dart';
 import 'package:motor_app/ui/widgets/custom_appbar.dart';
 import 'package:motor_app/ui/widgets/header_container.dart';
 import 'package:motor_app/ui/widgets/text_form.dart';
@@ -198,7 +198,7 @@ class _EditProductSpecificationScreenState
                               width: 50,
                             ),
                             EditTextForm(
-                              specifications: length,
+                              specifications: gear,
                               hintText: productManager.productDetail[0].gear ??
                                   "Chưa có thông tin này",
                               title: 'Hộp số',
@@ -288,8 +288,205 @@ class _EditProductSpecificationScreenState
                     ),
                   );
                 } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
+                  return SizedBox(
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 15, left: 15),
+                          child: Text(
+                            'Tên xe',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 6,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 15, left: 15),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: const Offset(0, 3),
+                                )
+                              ],
+                            ),
+                            child: TextForm(
+                              controller: productName,
+                              text: _productModel.productName,
+                              textInputType: TextInputType.text,
+                              obscure: false,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const Divider(),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            EditTextForm(
+                              title: 'Trọng lượng',
+                              specifications: weight,
+                              hintText: "Chưa có thông tin này",
+                              width: 100,
+                            ),
+                            EditTextForm(
+                              specifications: height,
+                              hintText: "Chưa có thông tin này",
+                              title: 'Chiều cao',
+                              width: 100,
+                            ),
+                            EditTextForm(
+                              title: 'Chiều rộng',
+                              specifications: width,
+                              hintText: "Chưa có thông tin này",
+                              width: 100,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const Divider(),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 70,
+                            ),
+                            EditTextForm(
+                              specifications: length,
+                              hintText: "Chưa có thông tin này",
+                              title: 'Chiều dài',
+                              width: 100,
+                            ),
+                            const SizedBox(
+                              width: 35,
+                            ),
+                            EditTextForm(
+                              specifications: petroTank,
+                              hintText: "Chưa có thông tin này",
+                              title: 'Dung tích bình xăng',
+                              width: 85,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const Divider(),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 50,
+                            ),
+                            EditTextForm(
+                              specifications: oilCacacity,
+                              hintText: "Chưa có thông tin này",
+                              title: 'Dung tích nhớt',
+                              width: 80,
+                            ),
+                            const SizedBox(
+                              width: 50,
+                            ),
+                            EditTextForm(
+                              specifications: gear,
+                              hintText: "Chưa có thông tin này",
+                              title: 'Hộp số',
+                              width: 120,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const Divider(),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 50,
+                            ),
+                            EditTextForm(
+                              specifications: cylinder,
+                              hintText: "Chưa có thông tin này",
+                              title: 'Dung tích xy-lanh',
+                              width: 110,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            EditTextForm(
+                              specifications: fuelConsumption,
+                              hintText: "Chưa có thông tin này",
+                              title: 'Tiêu hao nhiên liệu',
+                              width: 130,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const Divider(),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            EditTextForm(
+                              specifications: engine,
+                              hintText: "Chưa có thông tin này",
+                              title: 'Loại động cơ',
+                              width: 410,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const Divider(),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            EditTextForm(
+                              specifications: maximumCapacity,
+                              hintText: "Chưa có thông tin này",
+                              title: 'Công suất tối đa',
+                              width: 410,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const Divider(),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                      ],
+                    ),
                   );
                 }
               },
@@ -307,6 +504,21 @@ class _EditProductSpecificationScreenState
         ),
         child: ElevatedButton(
           onPressed: () {
+            context.read<ProductManager>().updateProductDetail(
+                  widget.idProduct,
+                  productName.text,
+                  weight.text,
+                  height.text,
+                  width.text,
+                  length.text,
+                  petroTank.text,
+                  engine.text,
+                  cylinder.text,
+                  maximumCapacity.text,
+                  oilCacacity.text,
+                  fuelConsumption.text,
+                  gear.text,
+                );
             Fluttertoast.showToast(
               msg: "Cập nhật thành công",
               toastLength: Toast.LENGTH_SHORT,
@@ -319,7 +531,7 @@ class _EditProductSpecificationScreenState
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const AdminHomePage(),
+                builder: (context) => const CategoriesManagerScreen(),
               ),
             );
           },

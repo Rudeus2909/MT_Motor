@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:motor_app/models/order_model.dart';
 
 class OrderService {
-  //addOrder
+  //Thêm đơn đặt hàng
   Future<bool> addOrder(
     int idUser,
     String orderTime,
@@ -46,7 +46,28 @@ class OrderService {
     }
   }
 
-  //fetchOrder
+  //Hiển thị tất cả đơn hàng trên cửa hàng
+  Future<List<OrderModel>> allOrders() async {
+    List<OrderModel> allOrders = [];
+    try {
+      final response = await http.get(
+        Uri.parse('http://192.168.56.1:8080/php_api/order.php?'),
+      );
+      if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body);
+        allOrders = List<OrderModel>.from(
+          jsonData.map(
+            (item) => OrderModel.fromJson(item),
+          ),
+        );
+      }
+    } catch (error) {
+      print(error);
+    }
+    return allOrders;
+  }
+
+  //Hiển thị đơn hàng của 1 user
   Future<List<OrderModel>> fetchOrder(int idUser) async {
     List<OrderModel> orders = [];
     try {
@@ -63,7 +84,7 @@ class OrderService {
     return orders;
   }
 
-  //fetchOrderDetail
+  //Hiển thị chi tiết đơn hàng theo id_order
   Future<List<OrderDetailModel>> fetchOrderDetail(int idOrder) async {
     List<OrderDetailModel> orderDetail = [];
     try {
@@ -80,7 +101,7 @@ class OrderService {
     return orderDetail;
   }
 
-  //updateOrderStatus
+  //Cập nhật trạng thái đơn hàng
   Future<bool> updateOrderStatus(int idOrder, String orderStatus) async {
     try {
       final response = await http.post(

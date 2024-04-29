@@ -20,3 +20,32 @@ class ProductModel {
     );
   }
 }
+
+class SearchProductModel {
+  final int? idProduct;
+  final int? idCategory;
+  final String? productName;
+  final String? categoryName;
+  final String? productImage;
+  final String? categoryImage;
+
+  SearchProductModel({
+    this.idCategory,
+    this.productName,
+    this.categoryName,
+    this.productImage,
+    this.categoryImage, 
+    this.idProduct,}
+  );
+
+  static SearchProductModel fromJson(Map<String, dynamic> json) {
+    return SearchProductModel(
+      idProduct: json['id_product'],
+      idCategory: json['id_category'],
+      productName: json['product_name'],
+      categoryName: json['category_name'],
+      productImage: json['product_image'],
+      categoryImage: json['category_image'],
+    );
+  }
+}

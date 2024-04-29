@@ -20,7 +20,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   TextEditingController passwordController = TextEditingController();
 
-  // final TextEditingController rePasswordController = TextEditingController();
+  final TextEditingController rePasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -85,13 +85,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   height: 6,
                 ),
 
-                //Re-Password
-                // TextForm(
-                //   controller: rePasswordController,
-                //   text: 'Nhập lại mật khẩu',
-                //   textInputType: TextInputType.text,
-                //   obscure: true,
-                // ),
+                // Re-Password
+                TextForm(
+                  controller: rePasswordController,
+                  text: 'Nhập lại mật khẩu',
+                  textInputType: TextInputType.text,
+                  obscure: true,
+                ),
                 const SizedBox(
                   height: 25,
                 ),
@@ -117,10 +117,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return const AlertDialog(
-                            title: Text("Thông báo"),
-                            content:
-                                Text("Tài khoản đã tồn tại"),
+                          return AlertDialog(
+                            title: const Text("Thông báo"),
+                            content: const Text("Tài khoản đã tồn tại"),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('Đóng'),
+                              ),
+                            ],
                           );
                         },
                       );

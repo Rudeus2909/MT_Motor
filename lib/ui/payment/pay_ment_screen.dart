@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:motor_app/services/login_service.dart';
-import 'package:motor_app/ui/orders/order_manager.dart';
-import 'package:motor_app/ui/products/products_manager.dart';
+import 'package:motor_app/manager/order_manager.dart';
+import 'package:motor_app/manager/products_manager.dart';
+import 'package:motor_app/ui/widgets/custom_appbar.dart';
+import 'package:motor_app/ui/widgets/header_container.dart';
 import 'package:motor_app/ui/widgets/text_form.dart';
 import 'package:provider/provider.dart';
 
@@ -33,18 +35,24 @@ class _PayMentScreenState extends State<PayMentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Đặt mua'),
-      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Text(
-                'Đặt Mua sản phẩm',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headlineMedium,
+            HeaderContainer(
+              child: Column(
+                children: [
+                  CustomAppbar(
+                    title: Text(
+                      'Đặt mua sản phẩm',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    showBackArrow: true,
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                ],
               ),
             ),
             const SizedBox(
@@ -158,7 +166,7 @@ class _PayMentScreenState extends State<PayMentScreen> {
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(30),
-                              child: Image.asset(
+                              child: Image.network(
                                 productColorInfo.productColorInfo[0].imageUrl,
                                 fit: BoxFit.cover,
                               ),
@@ -261,7 +269,10 @@ class _PayMentScreenState extends State<PayMentScreen> {
                           productColorInfo.productColorInfo[0].amount - 1;
                       var idUser = context.read<LoginService>().idUser;
                       var total = productColorInfo.productColorInfo[0].price;
-                      var orderTime = DateTime.now().toString();
+                      var now = DateTime.now().toLocal();
+                      var orderTime =
+                          '${now.year}-${now.month}-${now.day} ${now.hour}:${now.minute}:${now.second}';
+
                       var imageUrl =
                           productColorInfo.productColorInfo[0].imageUrl;
                       await context.read<OrderManager>().addOrder(

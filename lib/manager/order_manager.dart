@@ -5,7 +5,7 @@ import 'package:motor_app/services/order_service.dart';
 class OrderManager with ChangeNotifier {
   final _orderService = OrderService();
 
-  //addOrder
+  //Thêm đơn hàng
   Future addOrder(
     int idUser,
     String orderTime,
@@ -35,7 +35,26 @@ class OrderManager with ChangeNotifier {
     notifyListeners();
   }
 
-  //fetchOrder
+  //Hiển thị tất cả đơn hàng
+  late List<OrderModel> allOrder = [];
+  Future<void> allOrders() async {
+    try {
+      allOrder = await _orderService.allOrders();
+    } catch (error) {
+      print(error);
+    }
+    notifyListeners();
+  }
+
+  OrderModel? find(int idOrder) {
+    try {
+      return allOrder.firstWhere((item) => item.idOrder == idOrder);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  //Hiển thị đơn hàng theo id_user
   late List<OrderModel> orders = [];
   Future<void> fetchOrders(int idUser) async {
     try {
@@ -46,7 +65,7 @@ class OrderManager with ChangeNotifier {
     notifyListeners();
   }
 
-  //findOrderById
+  //Tìm đơn đặt hàng theo id_order
   OrderModel? findById(int idOrder) {
     try {
       return orders.firstWhere((item) => item.idOrder == idOrder);
@@ -55,18 +74,20 @@ class OrderManager with ChangeNotifier {
     }
   }
 
-  //fetchOrderDetail
+  //Hiển thị chi tiết đơn hàng
   late List<OrderDetailModel> orderDetail = [];
   Future<void> fetchOrderDetail(int idOrder) async {
     try {
+      orderDetail.clear();
       orderDetail = await _orderService.fetchOrderDetail(idOrder);
+      notifyListeners();
     } catch (error) {
       print(error);
     }
     notifyListeners();
   }
 
-  //updateOrderStatus
+  //Cập nhật trạng thái đơn hàng
   Future updateOrderStatus(int idOrder, String orderStatus) async {
     await _orderService.updateOrderStatus(idOrder, orderStatus);
     notifyListeners();

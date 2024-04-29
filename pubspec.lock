@@ -49,6 +49,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
+  colornames:
+    dependency: "direct main"
+    description:
+      name: colornames
+      sha256: c42ee28edfc65391d7cdb40577c57390e1ea2ff78d73a9983a452a72dacfbdbc
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -70,6 +78,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_hsvcolor_picker:
+    dependency: "direct main"
+    description:
+      name: flutter_hsvcolor_picker
+      sha256: ea5868dbb1c840ef502bbf60168b26e18eab13a3a2b07bfef0c59a64e7fedc2c
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -78,6 +94,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  flutter_material_color_picker:
+    dependency: "direct main"
+    description:
+      name: flutter_material_color_picker
+      sha256: ca1e7749d228c9155ea24bce98e647cdbffa350e6f334f6c001f841cd3d9c987
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   flutter_svg:
     dependency: "direct main"
     description:

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:motor_app/auth/login_screen.dart';
+import 'package:motor_app/manager/products_manager.dart';
+import 'package:motor_app/services/login_service.dart';
 import 'package:motor_app/ui/admin/products_manager/edit_products/edit_category_screen.dart';
 import 'package:motor_app/ui/admin/products_manager/show_products/products_manager_screen.dart';
-import 'package:motor_app/ui/category/category_manager.dart';
+import 'package:motor_app/manager/category_manager.dart';
 import 'package:motor_app/ui/widgets/custom_appbar.dart';
 import 'package:motor_app/ui/widgets/header_container.dart';
 import 'package:provider/provider.dart';
@@ -35,6 +38,41 @@ class _CategoriesManagerScreenState extends State<CategoriesManagerScreen> {
                       'Quản lý hãng xe',
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
+                    actions: [
+                      Tooltip(
+                        message: "Đăng xuất",
+                        child: IconButton(
+                          onPressed: () {showDialog(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: const Text('Đăng xuất'),
+                                content: const Text(
+                                    'Bạn có muốn đăng xuất khỏi ứng dụng'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, 'Không'),
+                                    child: const Text('Không'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      context.read<LoginService>().logout();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => LoginScreen(),
+                                        ),
+                                      );
+                                    },
+                                    child: const Text('Có'),
+                                  ),
+                                ],
+                              ),
+                            );},
+                          icon: const Icon(Icons.logout),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 50,
@@ -95,6 +133,7 @@ class CategoryList extends StatelessWidget {
                                   .categoryList[index].idCategory!),
                         ),
                       );
+                      context.read<ProductManager>().fetchProductsByCategory(categoryManager.categoryList[index].idCategory!);
                     },
                     onTap: () {
                       Navigator.push(

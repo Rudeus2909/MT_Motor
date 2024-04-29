@@ -1,7 +1,9 @@
+import 'package:colornames/colornames.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hsvcolor_picker/flutter_hsvcolor_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:motor_app/ui/admin/admin_home_page.dart';
-import 'package:motor_app/ui/products/products_manager.dart';
+import 'package:motor_app/manager/products_manager.dart';
 import 'package:motor_app/ui/widgets/custom_appbar.dart';
 import 'package:motor_app/ui/widgets/header_container.dart';
 import 'package:motor_app/ui/widgets/text_form.dart';
@@ -21,9 +23,16 @@ class EditProductColorDetailScreen extends StatefulWidget {
 
 class _EditProductColorDetailScreenState
     extends State<EditProductColorDetailScreen> {
+  Color _selectedColor = Colors.white;
   final TextEditingController price = TextEditingController();
   final TextEditingController amount = TextEditingController();
   final TextEditingController imageUrl = TextEditingController();
+
+  String colorName = "";
+  String getColorNameFromHex(Color color) {
+    final colorName = ColorNames.guess(color);
+    return colorName;
+  }
 
   @override
   void initState() {
@@ -62,6 +71,90 @@ class _EditProductColorDetailScreenState
                     child: Column(
                       children: [
                         const SizedBox(
+                          height: 40,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 15, left: 15),
+                          child: Text(
+                            'Chọn màu xe',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 6,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 15, left: 15),
+                          child: GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Chọn màu'),
+                                    content: SingleChildScrollView(
+                                      child: SizedBox(
+                                        height: 500,
+                                        width: 400,
+                                        child: ColorPicker(
+                                          initialPicker: Picker.paletteHue,
+                                          color: _selectedColor,
+                                          onChanged: (Color color) {
+                                            setState(() {
+                                              _selectedColor = color;
+                                              colorName = getColorNameFromHex(
+                                                  _selectedColor);
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text(
+                                          'Xong',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge,
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: _selectedColor,
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: const Offset(0, 3),
+                                  )
+                                ],
+                              ),
+                              child: const SizedBox(
+                                height: 50,
+                                width: 50,
+                                child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const Divider(),
+                        const SizedBox(
                           height: 20,
                         ),
                         Row(
@@ -72,7 +165,7 @@ class _EditProductColorDetailScreenState
                               hintText: productManager.productColorInfo[0].price
                                   .toString(),
                               title: 'Giá',
-                              width: 100,
+                              width: 130,
                             ),
                             EditTextForm(
                               detail: amount,
@@ -80,15 +173,25 @@ class _EditProductColorDetailScreenState
                                   .productColorInfo[0].amount
                                   .toString(),
                               title: 'Số lượng',
-                              width: 100,
-                            ),
+                              width: 130,
+                            )
                           ],
                         ),
-                        SizedBox(
-                            width: 400,
-                            child: TextFormField(
-                              controller: imageUrl,
-                            ))
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const Divider(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15, right: 15),
+                          child: EditTextForm(
+                            detail: imageUrl,
+                            hintText: 'Nhập đường dẫn hình ảnh',
+                            title: 'Hình ảnh',
+                          ),
+                        ),
                       ],
                     ),
                   );
@@ -112,6 +215,14 @@ class _EditProductColorDetailScreenState
         ),
         child: ElevatedButton(
           onPressed: () {
+            context.read<ProductManager>().updateProductColor(
+                  widget.idProduct,
+                  widget.idColor,
+                  colorName,
+                  price.text,
+                  amount.text,
+                  imageUrl.text,
+                );
             Fluttertoast.showToast(
               msg: "Cập nhật thành công",
               toastLength: Toast.LENGTH_SHORT,

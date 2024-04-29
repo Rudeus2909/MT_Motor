@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:motor_app/ui/admin/orders_manager/orders_manager_screen.dart';
 import 'package:motor_app/ui/admin/products_manager/show_products/categories_manager_screen.dart';
+import 'package:motor_app/ui/admin/users_manager/users_manager_screen.dart';
 
 
 class AdminHomePage extends StatefulWidget {
@@ -16,8 +18,8 @@ class _AdminHomePageState extends State<AdminHomePage> {
   static const List<Widget> _widgetOptions = <Widget>[
     Text('Tổng quan hoạt động ứng dụng'),
     CategoriesManagerScreen(),
-    Text('Quản lý đơn hàng'),
-    Text('Quản lý tài khoản'),
+    OrderManagerScreen(),
+    UserManagerScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -45,7 +47,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
             backgroundColor: Colors.green,
           ),
           BottomNavigationBarItem(
-            icon: Badge(child: Icon(Icons.all_inbox)),
+            icon: Badge(child: Icon(Icons.shopping_cart_checkout)),
             label: 'Quản lý đơn hàng',
             backgroundColor: Colors.purple,
           ),

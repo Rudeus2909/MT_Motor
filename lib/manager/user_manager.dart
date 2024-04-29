@@ -30,6 +30,15 @@ class UserManager with ChangeNotifier {
     notifyListeners();
   }
 
+  //Tìm người dùng theo id
+  UserModel? findById(int idUser) {
+    try {
+      return userList.firstWhere((item) => item.idUser == idUser);
+    } catch (error) {
+      return null;
+    }
+  }
+
   //Cập nhật thông tin người dùng
   Future updateUserInfo(
     int idUser,
@@ -51,6 +60,12 @@ class UserManager with ChangeNotifier {
   //Cập nhật hình ảnh đại diện của người dùng
   Future updateUserAvatar(int idUser, String imageUrl) async {
     await _userService.updateUserAvatar(idUser, imageUrl);
+    notifyListeners();
+  }
+
+  //Chỉnh sửa vai trò người dùng
+  Future editUserRole(int idUser, String role) async {
+    await _userService.editUserRole(idUser, role);
     notifyListeners();
   }
 }

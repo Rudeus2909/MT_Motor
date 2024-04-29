@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:motor_app/services/login_service.dart';
 import 'package:motor_app/ui/payment/pay_ment_screen.dart';
-import 'package:motor_app/ui/products/products_manager.dart';
+import 'package:motor_app/manager/products_manager.dart';
 import 'package:provider/provider.dart';
 import '../../utils/get_product_color.dart';
 
@@ -69,7 +69,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     productColorManager.productColor.length,
                                 itemBuilder: (context, index) {
                                   return Center(
-                                    child: Image.asset(
+                                    child: Image.network(
                                       productColorManager
                                           .productColor[index].imageUrl,
                                       fit: BoxFit.cover,
@@ -137,10 +137,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                     const BorderRadius.all(
                                                   Radius.circular(10),
                                                 ),
-                                                child: Image.asset(
-                                                    productColorManager
-                                                        .productColor[index]
-                                                        .imageUrl),
+                                                child: Image.network(
+                                                  productColorManager
+                                                      .productColor[index]
+                                                      .imageUrl,
+                                                ),
                                               ),
                                             ),
                                           ),

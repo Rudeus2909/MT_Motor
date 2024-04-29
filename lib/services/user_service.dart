@@ -18,9 +18,6 @@ class UserService {
     } catch (error) {
       print(error);
     }
-    for (UserModel user in userList) {
-      print(user.name);
-    }
     return userList;
   }
 
@@ -100,6 +97,27 @@ class UserService {
         body: {
           'id_user': idUser.toString(),
           'user_avatar': imageUrl,
+        },
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      print(error);
+      return false;
+    }
+  }
+
+  //Cập nhật vai trò người dùng
+  Future<bool> editUserRole(int idUser, String role) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://192.168.56.1:8080/php_api/users/user_manager.php?'),
+        body: {
+          'id_user': idUser.toString(),
+          'role': role,
         },
       );
       if (response.statusCode == 200) {
