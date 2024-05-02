@@ -46,6 +46,10 @@ class OrderManager with ChangeNotifier {
     notifyListeners();
   }
 
+  int get orderCount {
+    return allOrder.length;
+  }
+
   OrderModel? find(int idOrder) {
     try {
       return allOrder.firstWhere((item) => item.idOrder == idOrder);

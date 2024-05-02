@@ -2,7 +2,7 @@ import 'package:colornames/colornames.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hsvcolor_picker/flutter_hsvcolor_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:motor_app/ui/admin/admin_home_page.dart';
+import 'package:motor_app/ui/admin/admin_bottom_navigation.dart';
 import 'package:motor_app/manager/products_manager.dart';
 import 'package:motor_app/ui/widgets/custom_appbar.dart';
 import 'package:motor_app/ui/widgets/header_container.dart';
@@ -235,7 +235,7 @@ class _EditProductColorDetailScreenState
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const AdminHomePage(),
+                builder: (context) => const AdminBottomNavigation(),
               ),
             );
           },

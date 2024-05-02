@@ -19,10 +19,6 @@ class CategoryService {
     } catch (error) {
       print(error);
     }
-    // for (CategoryModel category in categoryList) {
-    //   print(category.categoryName);
-    //   print(category.categoryImage);
-    // }
     return categoryList;
   }
 
@@ -54,6 +50,27 @@ class CategoryService {
         Uri.parse('http://192.168.56.1:8080/php_api/products/category.php?'),
         body: {
           'id_category': idCategory.toString(),
+          'category_image': categoryImage,
+        },
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      print(error);
+      return false;
+    }
+  }
+
+  //Thêm hãng xe
+  Future<bool> addCategory(String categoryName, String categoryImage) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://192.168.56.1:8080/php_api/products/category.php?'),
+        body: {
+          'category_name': categoryName,
           'category_image': categoryImage,
         },
       );

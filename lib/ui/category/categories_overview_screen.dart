@@ -19,47 +19,52 @@ class _CategoryOverViewScreenState extends State<CategoryOverViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            HeaderContainer(
-              child: Column(
-                children: [
-                  CustomAppbar(
-                    title: Container(
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Danh mục hãng xe',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineMedium!
-                            .apply(color: Colors.black),
-                      ),
+      body: Column(
+        children: [
+          HeaderContainer(
+            child: Column(
+              children: [
+                CustomAppbar(
+                  title: Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Danh mục hãng xe',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium!
+                          .apply(color: Colors.black),
                     ),
                   ),
-                  const SizedBox(
-                    height: 50,
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          FutureBuilder(
+            future: _fetchCategory,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return const Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        CategoryGrid(),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 40,),
-            SizedBox(
-              height: 800,
-              child: FutureBuilder(
-                future: _fetchCategory,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return const CategoryGrid();
-                  }
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
+                );
+              }
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

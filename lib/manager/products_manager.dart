@@ -262,4 +262,28 @@ class ProductManager with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  //Tìm sản phẩm được yêu thích nhiều nhất
+
+  //Hiển thị tất cả sản phẩm được yêu thích
+  late List<MostFavoriteModel> mostFavoriteProducts = [];
+  Future<void> mostFavorite() async {
+    try {
+      mostFavoriteProducts = await _productService.mostFavorite();
+    } catch (error) {
+      print(error);
+    }
+    notifyListeners();
+  }
+
+  //Hiển thị sản phẩm được mua nhiều nhất
+  late List<MostPurchasedModel> mostPuschasedProduct = [];
+  Future<void> mostPuschased() async {
+    try {
+      mostPuschasedProduct = await _productService.mostPuschased();
+    } catch (error) {
+      print(error);
+    }
+    notifyListeners();
+  }
 }

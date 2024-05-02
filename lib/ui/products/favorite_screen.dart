@@ -213,9 +213,29 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                     ],
                   );
                 } else {
-                  return const Center(
-                    child: Text('Bạn chưa thích sản phẩm nào cả'),
-                  );
+                  return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 150),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.asset(
+                            'assets/no-results.png',
+                            height: 200,
+                            width: 200,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15, right: 15),
+                          child: Text(
+                            'Bạn chưa yêu thích mẫu xe nào cả',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                        ),
+                      ],
+                    );
                 }
               },
             ),

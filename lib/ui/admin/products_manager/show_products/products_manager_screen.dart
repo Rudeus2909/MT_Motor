@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:motor_app/ui/admin/products_manager/add_products/add_product_screen.dart';
 import 'package:motor_app/ui/admin/products_manager/edit_products/edit_product_specifications.dart';
 import 'package:motor_app/ui/admin/products_manager/show_products/colors_manager_screen.dart';
@@ -17,125 +18,173 @@ class ProductsManagerScreen extends StatefulWidget {
 }
 
 class _ProductsManagerScreenState extends State<ProductsManagerScreen> {
-
   @override
   void initState() {
     super.initState();
-    context
-        .read<ProductManager>()
-        .fetchProductsByCategory(widget.idCategory);
+    context.read<ProductManager>().fetchProductsByCategory(widget.idCategory);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            HeaderContainer(
-              child: Column(
-                children: [
-                  CustomAppbar(
-                    showBackArrow: true,
-                    title: Text(
-                      'Quản lý sản phẩm',
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
+      body: Column(
+        children: [
+          HeaderContainer(
+            child: Column(
+              children: [
+                CustomAppbar(
+                  showBackArrow: true,
+                  title: Text(
+                    'Quản lý sản phẩm',
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                ],
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Consumer<ProductManager>(
+                builder: (context, productManager, child) {
+                  if (productManager.productListByCategory.isNotEmpty) {
+                    return Column(
+                      children: [
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount:
+                              productManager.productListByCategory.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                ProductListTile(
+                                  productImageUrl: productManager
+                                      .productListByCategory[index]
+                                      .productImage,
+                                  productName: productManager
+                                      .productListByCategory[index].productName,
+                                  onEditPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditProductSpecificationScreen(
+                                          idProduct: productManager
+                                              .productListByCategory[index]
+                                              .idProduct!,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  onDeletePressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                        title: Text('Xóa sản phẩm'),
+                                        content: Text(
+                                            'Bạn có chắc chắn muốn xóa sản phẩm này không'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('Không'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () async {
+                                              context
+                                                  .read<ProductManager>()
+                                                  .deleteProduct(
+                                                    productManager
+                                                        .productListByCategory[
+                                                            index]
+                                                        .idProduct!,
+                                                  );
+                                              Fluttertoast.showToast(
+                                                msg: "Xóa thành công",
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.CENTER,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor: Colors.grey,
+                                                textColor: Colors.white,
+                                                fontSize: 16.0,
+                                              );
+                                              context
+                                                  .read<ProductManager>()
+                                                  .removeProduct(productManager
+                                                      .productListByCategory[
+                                                          index]
+                                                      .idProduct!);
+                                              Navigator.of(context).pop(true);
+                                              await context
+                                                  .read<ProductManager>()
+                                                  .fetchProductsByCategory(
+                                                      widget.idCategory);
+                                            },
+                                            child: const Text('Có'),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ColorsManagerScreen(
+                                          idProduct: productManager
+                                              .productListByCategory[index]
+                                              .idProduct!,
+                                          idCategory: widget.idCategory,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 25,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  } else {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 150),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.asset(
+                            'assets/admin/no-motorbike.png',
+                            height: 200,
+                            width: 200,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15, right: 15),
+                          child: Text(
+                            'Hãng xe này chưa có mẫu xe nào cả',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                },
               ),
             ),
-
-            Consumer<ProductManager>(
-              builder: (context, productManager, child) {
-                return SizedBox(
-                  height: 1000,
-                  child: ListView.builder(
-                    itemCount: productManager.productListByCategory.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          ProductListTile(
-                            productImageUrl: productManager
-                                .productListByCategory[index].productImage,
-                            productName: productManager
-                                .productListByCategory[index].productName,
-                            onEditPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      EditProductSpecificationScreen(
-                                    idProduct: productManager
-                                        .productListByCategory[index]
-                                        .idProduct!,
-                                  ),
-                                ),
-                              );
-                            },
-                            onDeletePressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                  title: Text('Xóa sản phẩm'),
-                                  content: Text(
-                                      'Bạn có chắc chắn muốn xóa sản phẩm này không'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text('Không'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () async {
-                                        context
-                                            .read<ProductManager>()
-                                            .deleteProduct(
-                                              productManager
-                                                  .productListByCategory[index]
-                                                  .idProduct!,
-                                            );
-                                        context.read<ProductManager>().removeProduct(productManager
-                                        .productListByCategory[index]
-                                        .idProduct!);
-                                        Navigator.of(context).pop(true);
-                                        await context.read<ProductManager>().fetchProductsByCategory(widget.idCategory);
-                                      },
-                                      child: const Text('Có'),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ColorsManagerScreen(
-                                      idProduct: productManager
-                                          .productListByCategory[index]
-                                          .idProduct!,
-                                          idCategory: widget.idCategory,),
-                                ),
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            height: 25,
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 5),
@@ -157,7 +206,7 @@ class _ProductsManagerScreenState extends State<ProductsManagerScreen> {
           },
           child: const Padding(
             padding: EdgeInsets.all(8.0),
-            child: Text('Thêm sản phẩm'),
+            child: Text('Thêm mẫu xe'),
           ),
         ),
       ),

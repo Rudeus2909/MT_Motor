@@ -49,3 +49,20 @@ class SearchProductModel {
     );
   }
 }
+
+class MostPurchasedModel {
+  final int? idProduct;
+  final int? totalCount;
+
+  MostPurchasedModel({
+    this.idProduct,
+    this.totalCount,
+  });
+
+  static MostPurchasedModel fromJson(Map<String, dynamic> json) {
+    return MostPurchasedModel(
+      idProduct: json['id_product'],
+      totalCount: json['total_count'],
+    );
+  }
+}

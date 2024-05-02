@@ -57,3 +57,20 @@ class FavoriteProductModel {
     );
   }
 }
+
+class MostFavoriteModel {
+  final int? idProduct;
+  final int? favoriteCount;
+
+  MostFavoriteModel({
+    this.idProduct,
+    this.favoriteCount,
+  });
+
+  static MostFavoriteModel fromJson(Map<String, dynamic> json) {
+    return MostFavoriteModel(
+      idProduct: json['id_product'],
+      favoriteCount: json['favorite_count'],
+    );
+  }
+}

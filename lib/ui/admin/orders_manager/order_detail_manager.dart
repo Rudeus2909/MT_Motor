@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:motor_app/manager/order_manager.dart';
 import 'package:motor_app/ui/widgets/custom_appbar.dart';
 import 'package:motor_app/ui/widgets/header_container.dart';
@@ -190,8 +191,12 @@ class _OrderDetailManagerState extends State<OrderDetailManager> {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Text(
-                                        orderManager.orderDetail[0].total
-                                            .toString(),
+                                        NumberFormat.currency(
+                                          locale: 'vi_VN',
+                                          symbol: 'VNĐ',
+                                          decimalDigits: 0,
+                                        ).format(
+                                            orderManager.orderDetail[0].total),
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleLarge,
@@ -420,10 +425,12 @@ class _OrderDetailManagerState extends State<OrderDetailManager> {
                                     height: 10,
                                   ),
                                   Text(
-                                    orderManager.orderDetail[0].total
-                                        .toString(),
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
+                                    NumberFormat.currency(
+                                      locale: 'vi_VN',
+                                      symbol: 'VNĐ',
+                                      decimalDigits: 0,
+                                    ).format(orderManager.orderDetail[0].total),
+                                    style: Theme.of(context).textTheme.bodyMedium,
                                   ),
                                   const SizedBox(
                                     height: 10,
@@ -445,10 +452,12 @@ class _OrderDetailManagerState extends State<OrderDetailManager> {
                                     height: 10,
                                   ),
                                   Text(
-                                    orderManager.orderDetail[0].total
-                                        .toString(),
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
+                                    NumberFormat.currency(
+                                      locale: 'vi_VN',
+                                      symbol: 'VNĐ',
+                                      decimalDigits: 0,
+                                    ).format(orderManager.orderDetail[0].total),
+                                    style: Theme.of(context).textTheme.bodyMedium,
                                   ),
                                   const SizedBox(
                                     height: 10,

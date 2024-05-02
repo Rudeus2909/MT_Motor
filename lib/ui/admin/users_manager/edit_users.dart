@@ -118,7 +118,7 @@ class _EditUsersScreenState extends State<EditUsersScreen> {
                                   validator: (value) {
                                     if (value!.isEmpty ||
                                         !value.contains('@')) {
-                                      return 'Invalid email!';
+                                      return 'E-mail không hợp lệ!';
                                     }
                                     return null;
                                   },

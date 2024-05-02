@@ -41,6 +41,7 @@ class TextForm extends StatelessWidget {
           hintStyle: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.black),
         ),
         validator: validator,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
       ),
     );
   }

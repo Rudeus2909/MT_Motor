@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor_app/services/login_service.dart';
 import 'package:motor_app/services/register_service.dart';
-import 'package:motor_app/ui/admin/admin_home_page.dart';
+import 'package:motor_app/ui/admin/admin_bottom_navigation.dart';
 import 'package:motor_app/manager/order_manager.dart';
 import 'package:motor_app/manager/products_manager.dart';
 import 'package:motor_app/utils/app_setting.dart';
@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
           RegisterScreen.routeName: (ctx) => SafeArea(
                 child: RegisterScreen(),
               ),
-          AdminHomePage.routeName: (ctx) => SafeArea(child: AdminHomePage()),
+          AdminBottomNavigation.routeName: (ctx) => SafeArea(child: AdminBottomNavigation()),
         },
       ),
     );

@@ -9,7 +9,8 @@ import 'package:motor_app/ui/widgets/header_container.dart';
 import 'package:provider/provider.dart';
 
 class ColorsManagerScreen extends StatefulWidget {
-  const ColorsManagerScreen({super.key, required this.idProduct, required this.idCategory});
+  const ColorsManagerScreen(
+      {super.key, required this.idProduct, required this.idCategory});
 
   final int idProduct;
   final int idCategory;
@@ -62,7 +63,9 @@ class _ColorsManagerScreenState extends State<ColorsManagerScreen> {
                     );
                   }
                   return RefreshIndicator(
-                    child: ProductColorsList(idCategory: widget.idCategory,),
+                    child: ProductColorsList(
+                      idCategory: widget.idCategory,
+                    ),
                     onRefresh: () => context
                         .read<ProductManager>()
                         .fetchProductColors(widget.idProduct),
@@ -105,9 +108,10 @@ class _ColorsManagerScreenState extends State<ColorsManagerScreen> {
 
 class ProductColorsList extends StatelessWidget {
   const ProductColorsList({
-    super.key, required this.idCategory,
+    super.key,
+    required this.idCategory,
   });
-  
+
   final int idCategory;
 
   @override
@@ -140,23 +144,49 @@ class ProductColorsList extends StatelessWidget {
                       );
                     },
                     onDeletePressed: () {
-                      context.read<ProductManager>().deleteProductColor(
-                            productManager.productColor[index].idProduct,
-                            productManager.productColor[index].idColor!,
-                          );
-                      Fluttertoast.showToast(
-                        msg: "Xóa thành công",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.CENTER,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.grey,
-                        textColor: Colors.white,
-                        fontSize: 16.0,
-                      );
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ProductsManagerScreen(idCategory: idCategory),
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: Text('Xóa màu xe'),
+                          content: Text(
+                              'Bạn có chắc chắn muốn xóa màu này không?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('Không'),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                context
+                                    .read<ProductManager>()
+                                    .deleteProductColor(
+                                      productManager
+                                          .productColor[index].idProduct,
+                                      productManager
+                                          .productColor[index].idColor!,
+                                    );
+                                Fluttertoast.showToast(
+                                  msg: "Xóa thành công",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.grey,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                                );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProductsManagerScreen(
+                                        idCategory: idCategory),
+                                  ),
+                                );
+                              },
+                              child: const Text('Có'),
+                            ),
+                          ],
                         ),
                       );
                     },

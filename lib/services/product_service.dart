@@ -327,4 +327,48 @@ class ProductService {
     }
     return searchProducts;
   }
+
+  //Hiển thị danh sách tất cả sản phẩm được yêu thích
+  Future<List<MostFavoriteModel>> mostFavorite() async {
+    List<MostFavoriteModel> mostFavorite = [];
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'http://192.168.56.1:8080/php_api/products/most_favorite.php?'),
+      );
+      if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body);
+        mostFavorite = List<MostFavoriteModel>.from(
+          jsonData.map(
+            (item) => MostFavoriteModel.fromJson(item),
+          ),
+        );
+      }
+    } catch (error) {
+      print(error);
+    }
+    return mostFavorite;
+  }
+
+  //Hiển thị sản phẩm được mua nhiều nhất
+  Future<List<MostPurchasedModel>> mostPuschased() async {
+    List<MostPurchasedModel> mostPuschased = [];
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'http://192.168.56.1:8080/php_api/products/most_purchased.php?'),
+      );
+      if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body);
+        mostPuschased = List<MostPurchasedModel>.from(
+          jsonData.map(
+            (item) => MostPurchasedModel.fromJson(item),
+          ),
+        );
+      }
+    } catch (error) {
+      print(error);
+    }
+    return mostPuschased;
+  }
 }

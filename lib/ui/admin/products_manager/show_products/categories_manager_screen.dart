@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:motor_app/auth/login_screen.dart';
 import 'package:motor_app/manager/products_manager.dart';
 import 'package:motor_app/services/login_service.dart';
+import 'package:motor_app/ui/admin/products_manager/add_products/add_category.dart';
 import 'package:motor_app/ui/admin/products_manager/edit_products/edit_category_screen.dart';
 import 'package:motor_app/ui/admin/products_manager/show_products/products_manager_screen.dart';
 import 'package:motor_app/manager/category_manager.dart';
@@ -42,7 +43,8 @@ class _CategoriesManagerScreenState extends State<CategoriesManagerScreen> {
                       Tooltip(
                         message: "Đăng xuất",
                         child: IconButton(
-                          onPressed: () {showDialog(
+                          onPressed: () {
+                            showDialog(
                               context: context,
                               builder: (BuildContext context) => AlertDialog(
                                 title: const Text('Đăng xuất'),
@@ -68,7 +70,8 @@ class _CategoriesManagerScreenState extends State<CategoriesManagerScreen> {
                                   ),
                                 ],
                               ),
-                            );},
+                            );
+                          },
                           icon: const Icon(Icons.logout),
                         ),
                       ),
@@ -80,25 +83,49 @@ class _CategoriesManagerScreenState extends State<CategoriesManagerScreen> {
                 ],
               ),
             ),
-            SizedBox(
-              height: 1000,
-              child: FutureBuilder(
-                future: context.read<CategoryManager>().fetchCategory(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  return RefreshIndicator(
-                    onRefresh: () =>
-                        context.read<CategoryManager>().fetchCategory(),
-                    child: const CategoryList(),
+            FutureBuilder(
+              future: context.read<CategoryManager>().fetchCategory(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
-                },
-              ),
+                }
+                return RefreshIndicator(
+                  onRefresh: () =>
+                      context.read<CategoryManager>().fetchCategory(),
+                  child: const Expanded(
+                    child: SingleChildScrollView(
+                      child: CategoryList(),
+                    ),
+                  ),
+                );
+              },
             ),
           ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 5),
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(5),
+            topRight: Radius.circular(5),
+          ),
+        ),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AddCategoryScreen(),
+              ),
+            );
+          },
+          child: const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text('Thêm hãng xe'),
+          ),
         ),
       ),
     );
@@ -112,47 +139,51 @@ class CategoryList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<CategoryManager>(
       builder: (context, categoryManager, child) {
-        return SizedBox(
-          height: 1000,
-          child: ListView.builder(
-            itemCount: categoryManager.categoryList.length,
-            itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  CategoryListTile(
-                    categoryImageUrl:
-                        categoryManager.categoryList[index].categoryImage,
-                    categoryName:
-                        categoryManager.categoryList[index].categoryName,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditCategoryScreen(
-                              idCategory: categoryManager
-                                  .categoryList[index].idCategory!),
-                        ),
-                      );
-                      context.read<ProductManager>().fetchProductsByCategory(categoryManager.categoryList[index].idCategory!);
-                    },
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ProductsManagerScreen(
-                              idCategory: categoryManager
-                                  .categoryList[index].idCategory!),
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                ],
-              );
-            },
-          ),
+        return Column(
+          children: [
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: categoryManager.categoryList.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    CategoryListTile(
+                      categoryImageUrl:
+                          categoryManager.categoryList[index].categoryImage,
+                      categoryName:
+                          categoryManager.categoryList[index].categoryName,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditCategoryScreen(
+                                idCategory: categoryManager
+                                    .categoryList[index].idCategory!),
+                          ),
+                        );
+                        context.read<ProductManager>().fetchProductsByCategory(
+                            categoryManager.categoryList[index].idCategory!);
+                      },
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProductsManagerScreen(
+                                idCategory: categoryManager
+                                    .categoryList[index].idCategory!),
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                  ],
+                );
+              },
+            ),
+          ],
         );
       },
     );

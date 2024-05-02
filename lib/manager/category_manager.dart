@@ -56,4 +56,11 @@ class CategoryManager with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  //Thêm hãng xe
+  Future addCategory(String categoryName, String categoryImage) async {
+    _categoryService.addCategory(categoryName, categoryImage);
+    fetchCategory();
+    notifyListeners();
+  }
 }

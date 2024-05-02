@@ -4,7 +4,7 @@ import 'package:motor_app/ui/news/news_overview_screen.dart';
 import 'package:motor_app/ui/products/favorite_screen.dart';
 import 'package:motor_app/ui/products/product_detail_screen.dart';
 import 'package:motor_app/manager/products_manager.dart';
-import 'package:motor_app/ui/user/search_products.dart';
+import 'package:motor_app/ui/products/search_products.dart';
 import 'package:motor_app/ui/widgets/custom_appbar.dart';
 import 'package:motor_app/ui/widgets/header_container.dart';
 import 'package:motor_app/manager/user_manager.dart';
